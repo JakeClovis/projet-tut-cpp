@@ -1,4 +1,5 @@
 bin/
 obj/
+output/
 SFML-Project.cbp
 SFML-Project.depend
