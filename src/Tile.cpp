@@ -42,7 +42,10 @@ sf::Sprite *Tile::getSprite(unsigned int index, float x, float y)
 
 Tile::~Tile()
 {
+	cout << "** Deleting the Tile " << this << endl;
 	for(unsigned int i = 0 ; i < m_sprites.size() ; i++)
+	{
+		cout << " * Deallocating the Sprite " << m_sprites[i] << endl;
 		delete m_sprites[i];
-	cout << "** Deallocating the Tile " << this << endl;
+	}
 }
