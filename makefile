@@ -7,7 +7,7 @@ all: compile bomberman
 compile:
 	@echo "** Compilation de Bomberman"
 	@mkdir -p output
-bomberman: main.o Game.o GameWindow.o
+bomberman: main.o Game.o GameWindow.o Tile.o Tileset.o
 	@echo "* Assemblage"
 	g++ -o bomberman output/* $(LIBS)
 clean:

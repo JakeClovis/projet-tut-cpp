@@ -1,13 +1,5 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <unistd.h>
+#include "Globals.h"
 #include "Game.h"
-
-#define DEBUG_MODE true
-#define G_VERSION "dev"
-#define G_AUTHORS "Guillaume JORANDON & Clément SIMON"
-
-using namespace std;
 
 /**
  * A structure that describes a null stream buffer (quite the equivalent of /dev/null on *nix systems)
@@ -63,13 +55,13 @@ int main(int argc, char *argv[])
 			{
 				cerr << "stoi(\"" << optarg << "\"): invalid_argument exception" << endl;
 				cerr << "Try " << argv[0] << " -h for help." << endl;
-				exit(1);
+				exit(GENERIC_ERROR);
 			}
 			break;
 		default: //invalid option
 			cout.rdbuf(coutBackup);
 			cerr << "Try " << argv[0] << " -h for help." << endl;
-			exit(1);
+			exit(GENERIC_ERROR);
 	}
 
 	cout << "Launching Bomberman clone v" << G_VERSION << "..." << endl <<

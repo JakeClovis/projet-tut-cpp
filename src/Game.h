@@ -1,13 +1,9 @@
 #ifndef _BOMBERMAN_GAME_H_
 #define _BOMBERMAN_GAME_H_
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "Globals.h"
 #include "GameWindow.h"
-
-#define DEFAULT_TILE_SIZE 70
-
-using namespace std;
+#include "Tileset.h"
 
 class Game
 {
@@ -15,6 +11,8 @@ private:
 	
 	GameWindow m_window; // main window
 	int m_tileSize; //real size of a tile (in pixels)
+	sf::Texture m_textureBase;
+	void setupTextures(); //called by constructor, setups textures
 
 public:
 
