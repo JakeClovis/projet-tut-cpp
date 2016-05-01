@@ -12,8 +12,11 @@ private:
 public:
 
 	Tile(sf::Sprite&); // default constructor which adds a first sprite to the Tile
+	Tile(); // empty constructor
 	~Tile(); // destructor
-	sf::Sprite *getSprite(float, float); // gets the first sprite of the vector of sprites (useful for a monosprite tile)
+	void addSprite(sf::Sprite&); // adds another sprite to the tile
+	sf::Sprite *getSprite(float, float); // gets the first sprite of the vector of sprites at the given coordinates (useful for a monosprite tile)
+	sf::Sprite *getSprite(unsigned int, float, float); // gets the sprite at given index, at given coordinates (useful for a multisprite tile)
 };
 
 #endif //_BOMBERMAN_TILE_H_

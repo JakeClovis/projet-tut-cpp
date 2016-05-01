@@ -30,7 +30,7 @@ void Game::start()
 
 	//TMP CODE TESTING PURPOSES
 	Tileset ts(&m_textureBase, 10, 5, 16, 16, m_tileSize, m_tileSize);
-	Tile *test = ts.createTile(1, 1);
+	Tile *test = ts.createTile({1, 2}, {1, 1});
 	//END OF TMP CODE
 
 	while(m_window.isOpen())
@@ -48,7 +48,7 @@ void Game::start()
 		
 		//TMP CODE TESTING PURPOSES
 		m_window.draw(*(test->getSprite(0, 0)));
-		m_window.draw(*(test->getSprite(1*m_tileSize, 0)));
+		m_window.draw(*(test->getSprite(1 , 1*m_tileSize, 0)));
 		m_window.draw(*(test->getSprite(0, 1*m_tileSize)));
 		//END
 

@@ -25,6 +25,28 @@ Tile *Tileset::createTile(int i, int j)
 	return new Tile(*newSprite);
 }
 
+Tile *Tileset::createTile(vector<int> i,vector <int> j)
+{
+	Tile *t = new Tile();
+	sf::Sprite *newSprite = NULL;
+	for(unsigned int k = 0 ; (k < i.size()) && (k < j.size()) ; k++)
+	{
+		newSprite = new sf::Sprite();
+		cout << "** Setting up the sf::Sprite " << newSprite << " via Tileset " << this << endl;
+		newSprite->setTexture(*m_texture);
+		newSprite->setTextureRect(sf::IntRect(
+								(i[k]-1)*m_width,
+								(j[k]-1)*m_height,
+								m_width,
+								m_height));
+		newSprite->setScale((float)m_displayWidth/(float)m_width,
+						(float)m_displayHeight/(float)m_height);
+		t->addSprite(*newSprite);
+	}
+
+	return t;
+}
+
 const sf::Texture *Tileset::getTexture()
 {
 	return m_texture;
