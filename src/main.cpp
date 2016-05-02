@@ -17,10 +17,11 @@ struct nStream: public std::streambuf
 void displayHelp(const char *name)
 {
 	cout << "Bomberman clone v" << G_VERSION << " - " << G_AUTHORS << endl <<
-			"Usage: " << name << " <[option(s)]" << endl <<
+			"Usage: " << name << " [option(s)]" << endl <<
 			"Options: " << endl <<
 			" -h\t\tDisplays this current help and exits" << endl <<
-			" -v\t\tVerbose output" << endl;
+			" -v\t\tVerbose output" << endl <<
+			" -s SIZE\tChange the tile size (default: " << DEFAULT_TILE_SIZE << ")" << endl;
 }
 
 /**
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
 			cout.rdbuf(coutBackup);
 			cerr << "Try " << argv[0] << " -h for help." << endl;
 			exit(GENERIC_ERROR);
-	}
+		}
 
 	cout << "Launching Bomberman clone v" << G_VERSION << "..." << endl <<
 		   "Crafted by " << G_AUTHORS << endl;

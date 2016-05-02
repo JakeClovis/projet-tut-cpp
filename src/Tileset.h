@@ -16,6 +16,7 @@ private:
 public:
 
 	Tileset(const sf::Texture*, int, int, int, int, int, int); // default constructor
+	template <typename T: Tile>
 	Tile *createTile(int, int); // returns a pointer on a Tile corresponding to the sprite at given coordinates (monosprite tile)
 	Tile *createTile(vector<int>, vector<int>); // returns a pointer on a Tile corresponding to the sprites at given coordinates (multisprite tile)a
 
