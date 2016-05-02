@@ -16,9 +16,46 @@ private:
 public:
 
 	Tileset(const sf::Texture*, int, int, int, int, int, int); // default constructor
-	template <typename T: Tile>
-	Tile *createTile(int, int); // returns a pointer on a Tile corresponding to the sprite at given coordinates (monosprite tile)
-	Tile *createTile(vector<int>, vector<int>); // returns a pointer on a Tile corresponding to the sprites at given coordinates (multisprite tile)a
+	
+	template<typename T = Tile>
+	T *createTile(int i, int j)
+	{
+		sf::Sprite *newSprite = new sf::Sprite();
+		cout << "** Setting up the sf::Sprite " << newSprite << " via Tileset " << this << endl;
+		newSprite->setTexture(*m_texture);
+		newSprite->setTextureRect(sf::IntRect(
+								(i-1)*m_width,
+								(j-1)*m_height,
+								m_width,
+								m_height));
+		newSprite->setScale((float)m_displayWidth/(float)m_width,
+						(float)m_displayHeight/(float)m_height);
+	
+		return new T(*newSprite);
+	}
+	
+	template<typename T = Tile>
+	T *createTile(vector<int> i,vector <int> j)
+	{
+		T *t = new T();
+		sf::Sprite *newSprite = NULL;
+		for(unsigned int k = 0 ; (k < i.size()) && (k < j.size()) ; k++)
+		{
+			newSprite = new sf::Sprite();
+			cout << "** Setting up the sf::Sprite " << newSprite << " via Tileset " << this << endl;
+			newSprite->setTexture(*m_texture);
+			newSprite->setTextureRect(sf::IntRect(
+									(i[k]-1)*m_width,
+									(j[k]-1)*m_height,
+									m_width,
+									m_height));
+			newSprite->setScale((float)m_displayWidth/(float)m_width,
+							(float)m_displayHeight/(float)m_height);
+			t->addSprite(*newSprite);
+		}
+	
+		return t;
+	}
 
 	const sf::Texture *getTexture(); // returns the texture of the tileset
 	int getDisplayWidth(); // returns the display width of a hypothetic tile in the tileset

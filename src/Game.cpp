@@ -4,68 +4,83 @@ Game::Game(): m_tileSize(DEFAULT_TILE_SIZE)
 {
 	cout << "** Initializating the game controller: " << endl <<
 			" * m_tileSize=" << DEFAULT_TILE_SIZE << " [default]" << endl;
-	setupTextures();
+	setupResources();
 }
 
 Game::Game(int tileSize): m_tileSize(tileSize)
 {
 	cout << "** Initializating the game controller: " << endl <<
 			" * m_tileSize=" << m_tileSize << endl;
-	setupTextures();
+	setupResources();
 }
 
-void Game::setupTextures()
+void Game::setupResources()
 {
-	if(!m_textureBase.loadFromFile("res/textures/player.png"))
+	if(!m_texturePlayer.loadFromFile("res/textures/player.png")) //player texture
 	{
 		cerr << "(X)FATAL:res/player.png: unable to load file" << endl;
 		exit(TEXTURE_ERROR);
 	}
-	cout << " * Loaded texture " << &m_textureBase << endl;
+	cout << " * Loaded texture " << &m_texturePlayer << endl;
+
+	if(!m_textureLevel.loadFromFile("res/textures/level.png")) //level texture
+	{
+		cerr << "(X)FATAL:res/level.png: unable to load file" << endl;
+		exit(TEXTURE_ERROR);
+	}
+	cout << " * Loaded texture " << &m_textureLevel << endl;
+
+	m_window.create(m_tileSize*17, m_tileSize*13); // Finally, we open the window
+}
+
+void Game::manageEvents()
+{
+	sf::Event event;
+	while(m_window.pollEvent(event))
+	{
+		if(event.type == sf::Event::Closed)
+		{
+			m_window.close();
+		}
+	}
 }
 
 void Game::start()
 {
-	m_window.create(m_tileSize*17, m_tileSize*13);
+	srand(time(NULL));
 
 	//TMP CODE TESTING PURPOSES
-	unsigned int tick = 1;
-	Tileset ts(&m_textureBase, 2, 12, 17, 27, m_tileSize, m_tileSize*((float)27/(float)17));
-	Tile *test = ts.createTile({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
-	sf::Clock clockTest;
-	sf::Time elapsedTime;
+	//unsigned int tick = 1;
+	TileSystem ts(new Tileset(&m_textureLevel, 3, 6, 16, 16, m_tileSize, m_tileSize));
+	ts.registerTile(1, ts.getTs()->createTile({1, 2, 3}, {1, 1, 1}));
+	ts.registerTile(2, ts.getTs()->createTile({1, 2, 3, 4, 5, 6}, {2, 2, 2, 2, 2, 2}));
+	ts.registerTile(3, ts.getTs()->createTile({1, 2, 3}, {3, 3, 3}));
+	Tilemap testMap(&ts, 9, 5);
+	testMap.setMap({
+					{3, 3, 3, 3, 3, 3, 3, 3, 3},
+					{3, 1, 1, 1, 3, 1, 1, 1, 3},
+					{3, 1, 1, 1, 2, 2, 2, 1, 3},
+					{3, 1, 1, 1, 1, 1, 3, 1, 3},
+					{3, 3, 3, 3, 3, 3, 3, 3, 3}
+					});
 	//END OF TMP CODE
 
 	while(m_window.isOpen())
 	{
-		sf::Event event;
-		while(m_window.pollEvent(event))
-		{
-			if(event.type == sf::Event::Closed)
-			{
-				m_window.close();
-			}
-		}
-
+		manageEvents();
+	
 		m_window.clear(sf::Color::White);
 		
 		//TMP CODE TESTING PURPOSES
-			m_window.draw(*(test->getSprite(tick, 0, 0)));
-			m_window.draw(*(test->getSprite(tick+3, m_tileSize, 0)));
-			m_window.draw(*(test->getSprite(tick+6, 2*m_tileSize, 0)));
-			m_window.draw(*(test->getSprite(tick+9, 3*m_tileSize, 0)));
-			elapsedTime = clockTest.getElapsedTime();
-			if(elapsedTime.asSeconds() >= 0.2)
+		for(int i = 0 ; i < testMap.getWidth() ; i++)
+			for(int j = 0 ; j < testMap.getHeight() ; j++)
 			{
-				clockTest.restart();
-				tick = tick==1?2:1;
+				sf::Sprite *toDraw = testMap.readPos(i, j);
+				if(toDraw != NULL) 
+					m_window.draw(*toDraw);
 			}
 		//END
 
 		m_window.display();
 	}
-
-	//TMP CODE TESTING PURPOSES
-	delete test;
-	//END
 }

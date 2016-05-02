@@ -15,6 +15,10 @@ private:
 public:
 
 	TileSystem(Tileset*); // default constructor
-	
+	virtual ~TileSystem(); // destructor
+	void registerTile(unsigned int, Tile*); // adds a Tile 
+	Tile *getTile(unsigned int); // gets a Tile at given index
 	Tileset *getTs(); // gets the pointer on the Tileset
 };
+
+#endif //_BOMBERMAN_TILE_SYSTEM_H_
