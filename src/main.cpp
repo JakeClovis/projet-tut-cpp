@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 {
 	nStream nullStream;
 	Game *game = NULL;
+	GameWindow window; // main window
 	streambuf *coutBackup = cout.rdbuf(&nullStream);
 	int options, tileSize = 0;
 
@@ -68,11 +69,13 @@ int main(int argc, char *argv[])
 	cout << "Launching Bomberman clone v" << G_VERSION << "..." << endl <<
 		   "Crafted by " << G_AUTHORS << endl;
 
-	if(tileSize > 0)
-		game = new Game(tileSize);
-	else
-		game = new Game();
 
+	if(tileSize > 0)
+		window.create(tileSize, 17, 13);
+	else
+		window.create(17, 13);
+
+	game = new Game(&window);
 	game->start();
 
 	delete game;

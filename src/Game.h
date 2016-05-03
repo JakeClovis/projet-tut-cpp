@@ -2,6 +2,7 @@
 #define _BOMBERMAN_GAME_H_
 
 #include "Globals.h"
+#include "ResourceAllocator.h"
 #include "GameWindow.h"
 #include "TileSystem.h"
 #include "Tilemap.h"
@@ -10,16 +11,17 @@ class Game
 {
 private:
 	
-	GameWindow m_window; // main window
-	int m_tileSize; //real size of a tile (in pixels)
-	sf::Texture m_texturePlayer, m_textureLevel;
+	GameWindow *m_window;
+	map<string, sf::Texture*> m_textures;
+	map<string, Tileset*> m_tilesets;
 	void setupResources(); //called by constructor, setups resources (textures, sounds, etc.)
 	void manageEvents(); //manages events
 
 public:
 
-	Game(); // empty constructor
-	Game(int); // default constructor
+	Game(GameWindow*); // empty constructor
+	Game(GameWindow*, int); // default constructor
+	virtual ~Game(); // destructor
 	void start(); // launches the game with the defined configuration
 };
 

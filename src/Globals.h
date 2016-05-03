@@ -10,8 +10,9 @@
 #define G_VERSION "dev"
 #define G_AUTHORS "Guillaume JORANDON & Clément SIMON"
 
-#define GENERIC_ERROR 1 //Problème générique (lecture d'arguments de la ligne de commande, etc.)
-#define TEXTURE_ERROR 2 //Problème lors du chargement d'une texture
+#define GENERIC_ERROR 1 //Generic problem (arguments from the command line, etc.)
+#define TEXTURE_ERROR 2 //Problem in Texture allocation
+#define TILESET_ERROR 3 //Problem in Tileset allocation
 
 using namespace std;
 
