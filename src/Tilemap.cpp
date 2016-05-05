@@ -38,12 +38,23 @@ int Tilemap::getHeight()
 	return m_height;
 }
 
-sf::Sprite *Tilemap::readPos(int i, int j)
+sf::Sprite *Tilemap::getSprite(int i, int j)
 {
 	return m_map[j][i]!=0?(m_tilesys->getTile(m_map[j][i])->getSprite(m_tilesys->getTs()->getDisplayWidth()*i, m_tilesys->getTs()->getDisplayHeight()*j)):NULL;
 }
 
-sf::Sprite *Tilemap::readPos(unsigned int index, int i, int j)
+sf::Sprite *Tilemap::getSprite(unsigned int index, int i, int j)
 {
 	return m_map[j][i]!=0?(m_tilesys->getTile(m_map[j][i])->getSprite(index, m_tilesys->getTs()->getDisplayWidth()*i, m_tilesys->getTs()->getDisplayHeight()*j)):NULL;
+}
+
+void Tilemap::draw(GameWindow *w)
+{	
+	for(int i = 0 ; i < m_width ; i++)
+		for(int j = 0 ; j < m_height ; j++)
+		{
+			sf::Sprite *toDraw = getSprite(i, j);
+			if(toDraw != NULL) 
+				w->draw(*toDraw);
+		}
 }

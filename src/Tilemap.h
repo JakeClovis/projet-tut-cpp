@@ -3,8 +3,9 @@
 
 #include "Globals.h"
 #include "TileSystem.h"
+#include "IDrawable.h"
 
-class Tilemap
+class Tilemap: public IDrawable
 {
 private:
 
@@ -18,8 +19,9 @@ public:
 	void setMap(const vector<vector<unsigned int>>&);
 	int getWidth();
 	int getHeight();
-	sf::Sprite *readPos(int, int);
-	sf::Sprite *readPos(unsigned int, int, int);
+	sf::Sprite *getSprite(int, int);
+	sf::Sprite *getSprite(unsigned int, int, int);
+	void draw(GameWindow*);
 };
 
 #endif //_BOMBERMAN_TILE_SYSTEM_H_

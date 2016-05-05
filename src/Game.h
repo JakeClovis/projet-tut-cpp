@@ -6,23 +6,21 @@
 #include "GameWindow.h"
 #include "TileSystem.h"
 #include "Tilemap.h"
+#include "Controller.h"
 
-class Game
+class Game: public Controller
 {
 private:
 	
-	GameWindow *m_window;
-	map<string, sf::Texture*> m_textures;
+	sf::View m_view;
 	map<string, Tileset*> m_tilesets;
-	void setupResources(); //called by constructor, setups resources (textures, sounds, etc.)
-	void manageEvents(); //manages events
+	void manageEvents();
 
 public:
 
-	Game(GameWindow*); // empty constructor
-	Game(GameWindow*, int); // default constructor
+	Game(GameWindow*);
 	virtual ~Game(); // destructor
-	void start(); // launches the game with the defined configuration
+	void start();
 };
 
 #endif //_BOMBERMAN_GAME_H_

@@ -1,5 +1,5 @@
 #include "Globals.h"
-#include "Game.h"
+#include "Menu.h"
 
 /**
  * A structure that describes a null stream buffer (quite the equivalent of /dev/null on *nix systems)
@@ -30,7 +30,7 @@ void displayHelp(const char *name)
 int main(int argc, char *argv[])
 {
 	nStream nullStream;
-	Game *game = NULL;
+	Menu *mainController = NULL; // the game instance
 	GameWindow window; // main window
 	streambuf *coutBackup = cout.rdbuf(&nullStream);
 	int options, tileSize = 0;
@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
 	else
 		window.create(17, 13);
 
-	game = new Game(&window);
-	game->start();
+	mainController = new Menu(&window);
+	mainController->start();
 
-	delete game;
+	delete mainController;
 
 	cout.rdbuf(coutBackup); //don't forget to restore standard output in order to avoid segmentation fault
 	return 0;
