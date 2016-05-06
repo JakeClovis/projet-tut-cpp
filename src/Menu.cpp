@@ -14,9 +14,9 @@ Menu::Menu(GameWindow *window): Controller(window)
 	m_tilesystems["button"]->registerTile(1, m_tilesystems["button"]->getTs()->createTile({1, 2, 3}, {1, 1, 1}));
 	m_tilesystems["button"]->registerTile(2, m_tilesystems["button"]->getTs()->createTile({1, 2, 3}, {2, 2, 2}));
 
-	ResourceAllocator::allocateFont(m_fonts, "default", "res/fonts/fipps.ttf");
+	ResourceAllocator::allocateFont(m_fonts, "default", "res/fonts/e4_2017.ttf");
 
-	playButton = new Button(0, 530, m_tilesystems["button"], "Jouer", m_fonts["default"],
+	playButton = new Button(0, 530, m_tilesystems["button"], "Nouvelle partie", m_fonts["default"],
 		[](void *arg) -> void {
 				GameWindow *w = (GameWindow*)arg;
 				Game *g = new Game(w);
