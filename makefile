@@ -17,8 +17,8 @@ bomberman: $(OBJ)
 	g++ -o bomberman output/*.o $(LIBS)
 output/%.o: src/%.cpp .d/%.d
 	$(CC) $< -o $@
-.d/%.d: src/%.cpp src/%.h
-	@$(CC) -MM $< -MF $@
+.d/%.d: src/%.cpp
+	$(CC) -MM $< -MF $@
 clean:
 	rm -f output/*.o
 	rm bomberman
