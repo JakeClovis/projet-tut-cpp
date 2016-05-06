@@ -12,6 +12,7 @@ SRCS=src/main.cpp\
 	 src/Tileset.cpp\
 	 src/TileSystem.cpp
 OBJ=$(subst src/,output/, $(subst .cpp,.o, $(SRCS)))
+
 all: bomberman
 bomberman: $(OBJ)
 	g++ -o bomberman output/*.o $(LIBS)
@@ -22,6 +23,8 @@ output/%.o: src/%.cpp .d/%.d
 clean:
 	rm -f output/*.o
 	rm bomberman
+re: clean bomberman
+.PHONY: clean
 
 -include $(OBJECTS:%.o=.d/%.d)
 -include $(LOBJECTS:%.o=.d/%.d)
