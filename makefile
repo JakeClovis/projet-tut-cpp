@@ -1,15 +1,27 @@
 LIBS=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
-all: compile bomberman
-%.o: src/%.cpp
-	@echo "* Compilation de $@"
-	g++ -Wall -std=c++11 -c $< -o output/$@
-compile:
-	@echo "** Compilation de Bomberman"
-	@mkdir -p output
-bomberman: main.o ResourceAllocator.o Controller.o Game.o GameWindow.o Tile.o Tileset.o TileSystem.o Tilemap.o Menu.o Button.o
-	@echo "* Assemblage"
-	g++ -o bomberman output/* $(LIBS)
+CC=$(CROSS)g++ -c -Wall -std=c++11 $(DEFINES)
+SRCS=src/main.cpp\
+	 src/Button.cpp\
+	 src/Controller.cpp\
+	 src/Game.cpp\
+	 src/GameWindow.cpp\
+	 src/Menu.cpp\
+	 src/ResourceAllocator.cpp\
+	 src/Tile.cpp\
+	 src/Tilemap.cpp\
+	 src/Tileset.cpp\
+	 src/TileSystem.cpp
+OBJ=$(subst src/,output/, $(subst .cpp,.o, $(SRCS)))
+all: bomberman
+bomberman: $(OBJ)
+	g++ -o bomberman output/*.o $(LIBS)
+output/%.o: src/%.cpp .d/%.d
+	$(CC) $< -o $@
+.d/%.d: src/%.cpp src/%.h
+	@$(CC) -MM $< -MF $@
 clean:
-	@echo "** Nettoyage de la compilation"
-	rm -f bomberman
-	rm -rf output/
+	rm -f output/*.o
+	rm bomberman
+
+-include $(OBJECTS:%.o=.d/%.d)
+-include $(LOBJECTS:%.o=.d/%.d)

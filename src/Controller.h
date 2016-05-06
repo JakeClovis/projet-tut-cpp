@@ -7,6 +7,7 @@
 #include "GameWindow.h"
 #include "Tileset.h"
 #include "TileSystem.h"
+#include "ResourceAllocator.h"
 
 class Controller
 {

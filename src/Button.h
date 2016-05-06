@@ -4,7 +4,6 @@
 #include "Globals.h"
 #include "IDrawable.h"
 #include <SFML/Graphics/Rect.hpp>
-
 class Button: public sf::IntRect, public IDrawable
 {
 protected:

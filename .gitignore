@@ -1,6 +1,7 @@
 bin/
 obj/
 output/
+*.o
 wip-files/
 bomberman
 SFML-Project.cbp

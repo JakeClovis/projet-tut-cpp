@@ -2,7 +2,6 @@
 #define _BOMBERMAN_GAME_H_
 
 #include "Globals.h"
-#include "ResourceAllocator.h"
 #include "GameWindow.h"
 #include "TileSystem.h"
 #include "Tilemap.h"

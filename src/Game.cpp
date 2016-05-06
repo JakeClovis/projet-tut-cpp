@@ -50,7 +50,6 @@ void Game::start()
 	srand(time(NULL));
 	m_toRectifyRatio = false;
 
-
 	//TMP CODE TESTING PURPOSES
 	TileSystem ts(m_tilesets["level"]);
 	ts.registerTile(1, ts.getTs()->createTile({1, 2, 3}, {1, 1, 1}));

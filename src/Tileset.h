@@ -30,7 +30,7 @@ public:
 								m_height));
 		newSprite->setScale((float)m_displayWidth/(float)m_width,
 						(float)m_displayHeight/(float)m_height);
-	
+		
 		return new T(*newSprite);
 	}
 	
