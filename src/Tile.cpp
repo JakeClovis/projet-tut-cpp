@@ -30,7 +30,7 @@ sf::Sprite *Tile::getSprite(float x, float y)
 
 sf::Sprite *Tile::getSprite(unsigned int index, float x, float y)
 {
-	if((index < m_sprites.size()) && (index >= 0))
+	if((index < m_sprites.size()))
 	{
 		m_sprites[index]->setPosition(sf::Vector2f(x, y));
 		return m_sprites[index];

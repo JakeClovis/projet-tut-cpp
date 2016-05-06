@@ -4,12 +4,15 @@
 #include "Globals.h"
 #include "Controller.h"
 #include "Game.h"
+#include "Button.h"
 
 class Menu: public Controller
 {
 private:
 
 	void manageEvents();
+	Button *playButton, *quitButton;
+	sf::Sprite background, logo;
 	
 public:
 

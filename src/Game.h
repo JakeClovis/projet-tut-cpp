@@ -13,7 +13,6 @@ class Game: public Controller
 private:
 	
 	sf::View m_view;
-	map<string, Tileset*> m_tilesets;
 	void manageEvents();
 
 public:

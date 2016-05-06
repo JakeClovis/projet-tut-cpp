@@ -2,10 +2,15 @@
 #define _BOMBERMAN_IDRAWABLE_H_
 
 #include "Globals.h"
+#include "TileSystem.h"
 #include "GameWindow.h"
 
 class IDrawable
 {
+protected:
+
+	TileSystem *m_tilesys;
+
 public:
 
 	virtual void draw(GameWindow*) = 0;

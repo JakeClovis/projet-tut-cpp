@@ -17,9 +17,7 @@ Game::Game(GameWindow* window): Controller(window)
 
 Game::~Game()
 {
-	cout << "** Deleting the Controller " << this << endl;
-	cout << " * Deallocating the Tileset " << m_tilesets["level"] << endl;
-	delete m_tilesets["level"];
+	cout << "** Deleting the Game Controller " << this << endl;
 }
 
 void Game::manageEvents()
