@@ -7,6 +7,11 @@ Game::Game(GameWindow* window): Controller(window)
 	
 	ResourceAllocator::allocateTileset(m_tilesets, "level", new Tileset(m_textures["level"], 3, 6, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
 
+	ResourceAllocator::allocateTileSystem(m_tilesystems, "level",  m_tilesets["level"]);
+	m_tilesystems["level"]->registerTile(1, {1, 2, 3}, {1, 1, 1});
+	m_tilesystems["level"]->registerTile(2, {1, 2, 3, 4, 5, 6}, {2, 2, 2, 2, 2, 2});
+	m_tilesystems["level"]->registerTile(3, {1, 2, 3}, {3, 3, 3});
+	
 	m_view.reset(sf::FloatRect(0, 0, m_window->getSize().x - 2*m_window->getTileSize(), m_window->getSize().y - 2*m_window->getTileSize()));
 	m_view.setViewport(sf::FloatRect(
 							1/(float)m_window->getWidth(), 
@@ -26,36 +31,20 @@ void Game::manageEvents()
 	while(m_window->pollEvent(event))
 	{
 		switch(event.type)
-		{
-			case sf::Event::Closed:
-				m_window->close();
-				break;
-			case sf::Event::Resized:
-					m_toRectifyRatio = true;
-				break;
+		{	
 			default:
 				break;
 		}
-	}
-	
-	if(!sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_toRectifyRatio)
-	{
-		m_window->rectifyRatio();
-		m_toRectifyRatio = false;
+		m_window->manageEvents(event);
 	}
 }
 
 void Game::start()
 {
 	srand(time(NULL));
-	m_toRectifyRatio = false;
 
 	//TMP CODE TESTING PURPOSES
-	TileSystem ts(m_tilesets["level"]);
-	ts.registerTile(1, ts.getTs()->createTile({1, 2, 3}, {1, 1, 1}));
-	ts.registerTile(2, ts.getTs()->createTile({1, 2, 3, 4, 5, 6}, {2, 2, 2, 2, 2, 2}));
-	ts.registerTile(3, ts.getTs()->createTile({1, 2, 3}, {3, 3, 3}));
-	Tilemap testMap(&ts, m_window->getWidth()-2, m_window->getHeight()-2);
+	Tilemap testMap(m_tilesystems["level"], m_window->getWidth()-2, m_window->getHeight()-2);
 	testMap.setMap({
 					{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, },
 					{3, 1, 1, 1, 1, 1, 3, 1, 3, 1, 1, 1, 1, 1, 3, },

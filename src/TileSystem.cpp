@@ -10,8 +10,22 @@ Tileset *TileSystem::getTs()
 	return m_ts;
 }
 
-void TileSystem::registerTile(unsigned int index, Tile *t)
+void TileSystem::registerTile(unsigned int index, int i, int j)
 {
+	Tile *t = m_ts->createTile(i, j);
+	if(index != 0)
+	{
+		cout << "** Registering the Tile " << t << " in the TileSystem " << this << endl;
+		if(m_tilesList.insert(pair<unsigned int, Tile*>(index, t)).second == false)
+			cout << "(!)WARNING:" << index << " is an already existing index in the TileSystem " << this << " (insertion of " << t << " ommitted)" << endl;
+	}
+	else
+		cout << "(!)WARNING:couldn't register " << t << " in the TileSystem " << this << " (0 is a special index)" << endl;
+}
+
+void TileSystem::registerTile(unsigned int index, vector<int> i, vector<int> j)
+{
+	Tile *t = m_ts->createTile(i, j);
 	if(index != 0)
 	{
 		cout << "** Registering the Tile " << t << " in the TileSystem " << this << endl;

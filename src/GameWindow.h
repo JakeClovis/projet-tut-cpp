@@ -11,6 +11,7 @@ private:
 
 	int m_tileSize;
 	int m_width, m_height;
+	bool m_toRectifyRatio;
 
 public:
 
@@ -20,6 +21,7 @@ public:
 	int getWidth();
 	int getHeight();
 	void rectifyRatio();
+	void manageEvents(sf::Event&);
 };
 
 #endif //_BOMBERMAN_GAME_WINDOW_H_

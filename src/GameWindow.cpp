@@ -2,6 +2,7 @@
 
 void GameWindow::create(int tileSize, int width, int height)
 {
+	m_toRectifyRatio = false;
 	m_tileSize = tileSize;
 	m_width = width;
 	m_height = height;
@@ -41,5 +42,26 @@ void GameWindow::rectifyRatio()
 	else if(aspectY<aspectX)
 	{
 		setSize(sf::Vector2u(aspectY*m_width, getSize().y));
+	}
+}
+
+void GameWindow::manageEvents(sf::Event &event)
+{
+	switch(event.type)
+	{
+		case sf::Event::Closed:
+			close();
+			break;
+		case sf::Event::Resized:
+			m_toRectifyRatio = true;
+			break;
+		default:
+			break;
+	}	
+	
+	if(!sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_toRectifyRatio)
+	{
+		rectifyRatio();
+		m_toRectifyRatio = false;
 	}
 }

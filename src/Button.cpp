@@ -12,7 +12,7 @@ Button::Button(int x, int y, TileSystem *tilesys, string text, sf::Font *font, v
 	sf::FloatRect textBox = m_text.getGlobalBounds();
 	
 	for(i = 1 ; i*m_tilesys->getTs()->getDisplayWidth() < textBox.width ; i++);
-	width = i*m_tilesys->getTs()->getDisplayWidth();
+	width = (1+i)*m_tilesys->getTs()->getDisplayWidth();
 	height = m_tilesys->getTs()->getDisplayHeight();
 }
 
@@ -34,7 +34,7 @@ void Button::draw(GameWindow *window)
 
 
 	window->draw(*(m_tilesys->getTile(tileIndexToDraw)->getSprite(left, top)));
-	for(i = 1 ; i*m_tilesys->getTs()->getDisplayWidth() < width ; i++)
+	for(i = 1 ; (i+1)*m_tilesys->getTs()->getDisplayWidth() < width ; i++)
 		window->draw(*(m_tilesys->getTile(tileIndexToDraw)->getSprite(1, left + (i*m_tilesys->getTs()->getDisplayWidth()), top)));
 	window->draw(*(m_tilesys->getTile(tileIndexToDraw)->getSprite(2, left + (i*m_tilesys->getTs()->getDisplayWidth()), top)));
 

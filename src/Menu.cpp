@@ -11,12 +11,12 @@ Menu::Menu(GameWindow *window): Controller(window)
 	ResourceAllocator::allocateTileset(m_tilesets, "button", new Tileset(m_textures["button"], 2, 3, 32, 32, m_window->getTileSize(), m_window->getTileSize()));
 
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "button",  m_tilesets["button"]);
-	m_tilesystems["button"]->registerTile(1, m_tilesystems["button"]->getTs()->createTile({1, 2, 3}, {1, 1, 1}));
-	m_tilesystems["button"]->registerTile(2, m_tilesystems["button"]->getTs()->createTile({1, 2, 3}, {2, 2, 2}));
+	m_tilesystems["button"]->registerTile(1, {1, 2, 3}, {1, 1, 1});
+	m_tilesystems["button"]->registerTile(2, {1, 2, 3}, {2, 2, 2});
 
 	ResourceAllocator::allocateFont(m_fonts, "default", "res/fonts/e4_2017.ttf");
 
-	playButton = new Button(0, 530, m_tilesystems["button"], "Nouvelle partie", m_fonts["default"],
+	playButton = new Button(0, 2*m_window->getSize().y/3, m_tilesystems["button"], "Nouvelle partie", m_fonts["default"],
 		[](void *arg) -> void {
 				GameWindow *w = (GameWindow*)arg;
 				Game *g = new Game(w);
@@ -24,7 +24,7 @@ Menu::Menu(GameWindow *window): Controller(window)
 				delete g;
 		});
 	playButton->left = m_window->getSize().x/2 - playButton->width/2; 
-	quitButton = new Button(0, 550+m_tilesystems["button"]->getTs()->getDisplayHeight(), m_tilesystems["button"], "Quitter", m_fonts["default"],
+	quitButton = new Button(0, +2*m_window->getSize().y/3+3*m_tilesystems["button"]->getTs()->getDisplayHeight()/2, m_tilesystems["button"], "Quitter", m_fonts["default"],
 		[](void *arg) -> void {
 				GameWindow *w = (GameWindow*)arg;
 				w->close();
@@ -34,8 +34,9 @@ Menu::Menu(GameWindow *window): Controller(window)
 	background.setTexture(*m_textures["background"]);
 	background.setScale(m_window->getSize().x/(float)m_textures["background"]->getSize().x,m_window->getSize().y/(float)m_textures["background"]->getSize().y);
 	logo.setTexture(*m_textures["logo"]);
-	logo.setScale(0.6f, 0.6f);
-	logo.setPosition(m_window->getSize().x/2 - 0.6f*m_textures["logo"]->getSize().x/2, 200);
+	float logoScale = 0.45f*(m_window->getTileSize()/(float)DEFAULT_TILE_SIZE);
+	logo.setScale(logoScale, logoScale);
+	logo.setPosition(m_window->getSize().x/2 - logoScale*m_textures["logo"]->getSize().x/2, m_window->getSize().y/3);
 
 	ResourceAllocator::allocateMusic(m_musics, "title", "res/musics/title.ogg", true);
 }
@@ -54,12 +55,6 @@ void Menu::manageEvents()
 	{
 		switch(event.type)
 		{
-			case sf::Event::Closed:
-				m_window->close();
-				break;
-			case sf::Event::Resized:
-				m_toRectifyRatio = true;
-				break;
 			case sf::Event::MouseButtonPressed:
 				if(playButton->contains(event.mouseButton.x, event.mouseButton.y))
 				{
@@ -73,18 +68,12 @@ void Menu::manageEvents()
 			default:
 				break;
 		}
-	}
-
-	if(!sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_toRectifyRatio)
-	{
-		m_window->rectifyRatio();
-		m_toRectifyRatio = false;
+		m_window->manageEvents(event);
 	}
 }
 
 void Menu::start()
 {
-	m_toRectifyRatio = false;
 	m_musics["title"]->play();
 	
 

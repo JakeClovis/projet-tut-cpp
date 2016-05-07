@@ -19,7 +19,6 @@ protected:
 	map<string, Tileset*> m_tilesets;
 	map<string, TileSystem*> m_tilesystems;
 	map<string, sf::Music*> m_musics;
-	bool m_toRectifyRatio;
 	virtual void manageEvents() = 0;
 
 public:

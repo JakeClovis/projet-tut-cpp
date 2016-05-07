@@ -6,7 +6,7 @@
 #include <SFML/System.hpp>
 #include <unistd.h>
 
-#define DEFAULT_TILE_SIZE 70
+#define DEFAULT_TILE_SIZE 50
 #define DEBUG_MODE true
 #define G_VERSION "dev"
 #define G_AUTHORS "Guillaume JORANDON & Clément SIMON"
