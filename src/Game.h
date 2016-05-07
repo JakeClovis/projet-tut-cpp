@@ -7,17 +7,32 @@
 #include "Tilemap.h"
 #include "Controller.h"
 
+/*! \brief Controller that handles the game process
+ */
 class Game: public Controller
 {
 private:
 	
-	sf::View m_view;
+	sf::View m_view; //!< container for the game context
+	/*! \brief called during the event management
+	 *
+	 * It will control user inputs, pause process, etc.
+	 */
 	void manageEvents();
 
 public:
 
-	Game(GameWindow*);
-	virtual ~Game(); // destructor
+	/*! \brief default constructor
+	 *  \see Controller::Controller(GameWindow *window)
+	 */
+	Game(GameWindow *window);
+	/*! \brief destructor
+	 *  \see Controller::~Controller()
+	 */
+	virtual ~Game();
+	/*! \brief main method that manages the lifecycle of the Controller
+	 *  \see void Controller::start()
+	 */
 	void start();
 };
 

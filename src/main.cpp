@@ -1,18 +1,20 @@
 #include "Globals.h"
 #include "Menu.h"
 
-/**
- * A structure that describes a null stream buffer (quite the equivalent of /dev/null on *nix systems)
+/*! \brief a structure that describes a null stream buffer (quite the equivalent of /dev/null on *nix systems)
  */
 struct nStream: public std::streambuf
 {
+	/*! \brief overflow function, won't do anything because it's a null buffer
+	 *  \param c nevermind, it's not important
+	 */
 	void overflow(char c)
 	{
 	}
 };
 
-/**
- * Prints the help on the standard output
+/*! \brief prints the help on the standard output
+ *  \param name corresponds to argv[0]
  */
 void displayHelp(const char *name)
 {
@@ -24,8 +26,9 @@ void displayHelp(const char *name)
 			" -s SIZE\tChange the tile size (default: " << DEFAULT_TILE_SIZE << ")" << endl;
 }
 
-/**
- * Reads options from command line then launches the game
+/*! \brief main file, reads the command line and launches the game
+ *  \param argc arguments count (o rly?)
+ *  \param argv arguments from the command line (O, RLY???)
  */
 int main(int argc, char *argv[])
 {
