@@ -4,20 +4,38 @@
 #include "Globals.h"
 #include "Tile.h"
 
+/*! \brief a Tileset stores information about a set of Tile after a sf::Texture
+ */
 class Tileset
 {
 private:
 	
-	const sf::Texture *m_texture;
-	int m_rows, m_cols;
-	int m_width, m_height;
-	int m_displayWidth, m_displayHeight;
+	const sf::Texture *m_texture; //!< pointer to the sf::Texture of the Tileset
+	int m_rows; //!< number of rows in the sf::Texture
+	int m_cols; //!< number of columns in the sf::Texture
+	int m_width; //!< width of a Tile in the sf::Texture
+	int m_height; //!< height of a Tile in the sf::Texture
+	int m_displayWidth; //!< display width of a Tile
+	int m_displayHeight; //!< display height of a Tile
 
 public:
 
-	Tileset(const sf::Texture*, int, int, int, int, int, int); // default constructor
+	/*! \brief default constructor
+	 *  \param tex pointer to the sf::Texture of the Tileset
+	 *  \param rows number of rows
+	 *  \param cols number of columns
+	 *  \param width width of a Tile
+	 *  \param height height of a Tile
+	 *  \param displayWidth display width
+	 *  \param displayHeight display height
+	 */
+	Tileset(const sf::Texture *tex, int rows, int cols, int width, int height, int displayWidth, int displayHeight);
 	
 	template<typename T = Tile>
+	/*! \brief create a Tile with a single sf::Sprite at given coordinates on the sf::Texture (in terms of rows and cols, not pixels)
+	 *  \param i x value
+	 *  \param j y value
+	 */
 	T *createTile(int i, int j)
 	{
 		sf::Sprite *newSprite = new sf::Sprite();
@@ -35,6 +53,10 @@ public:
 	}
 	
 	template<typename T = Tile>
+	/*! \brief create a Tile with multiples sf::Sprite at given coordinates on the sf::Texture (in terms of rows and cols, not pixels)
+	 *  \param i x values
+	 *  \param j y values
+	 */
 	T *createTile(vector<int> i,vector <int> j)
 	{
 		T *t = new T();
@@ -57,13 +79,34 @@ public:
 		return t;
 	}
 
-	const sf::Texture *getTexture(); // returns the texture of the tileset
-	int getDisplayWidth(); // returns the display width of a hypothetic tile in the tileset
-	int getDisplayHeight(); // returns the display height of a hypothetic tile in the tileset
-	int getWidth(); // returns the width of a hypothetic tile in the tileset
-	int getHeight(); // returns the height of a hypothetic tile in the tileset
-	int getRows(); // returns the number of rows in the tileset
-	int getCols(); // returns the number of columns in the tileset
+	/*! \brief getter of m_texture
+	 *  \return m_texture
+	 */
+	const sf::Texture *getTexture();
+	/*! \brief getter of m_displayWidth
+	 *  \return m_displayWidth
+	 */
+	int getDisplayWidth();
+	/*! \brief getter of m_displayHeight
+	 *  \return m_displayHeight
+	 */
+	int getDisplayHeight();
+	/*! \brief getter of m_width
+	 *  \return m_width
+	 */
+	int getWidth();
+	/*! \brief getter of m_height
+	 *  \return m_height
+	 */
+	int getHeight();
+	/*! \brief getter of m_rows
+	 *  \return m_rows
+	 */
+	int getRows();
+	/*! \brief getter of m_cols
+	 *  \return m_cols
+	 */
+	int getCols();
 };
 
 #endif //_BOMBERMAN_TILESET_H_
