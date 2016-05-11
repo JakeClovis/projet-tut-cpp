@@ -2,6 +2,7 @@
 #define _BOMBERMAN_TILESET_H_
 
 #include "Globals.h"
+#include "MapTile.h"
 #include "Tile.h"
 
 /*! \brief a Tileset stores information about a set of Tile after a sf::Texture
@@ -36,7 +37,7 @@ public:
 	 *  \param i x value
 	 *  \param j y value
 	 */
-	T *createTile(int i, int j)
+	T *createTile(int i, int j, bool c=NULL, bool b=NULL)
 	{
 		sf::Sprite *newSprite = new sf::Sprite();
 		cout << "** Setting up the sf::Sprite " << newSprite << " via Tileset " << this << endl;
@@ -57,7 +58,7 @@ public:
 	 *  \param i x values
 	 *  \param j y values
 	 */
-	T *createTile(vector<int> i,vector <int> j)
+	T *createTile(vector<int> i,vector <int> j, bool c=NULL, bool b=NULL)
 	{
 		T *t = new T();
 		sf::Sprite *newSprite = NULL;

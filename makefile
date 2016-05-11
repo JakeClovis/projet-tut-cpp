@@ -10,7 +10,8 @@ SRCS=src/main.cpp\
 	 src/Tile.cpp\
 	 src/Tilemap.cpp\
 	 src/Tileset.cpp\
-	 src/TileSystem.cpp
+	 src/TileSystem.cpp\
+	 src/MapTile.cpp
 OBJ=$(subst src/,output/, $(subst .cpp,.o, $(SRCS)))
 
 all: bomberman

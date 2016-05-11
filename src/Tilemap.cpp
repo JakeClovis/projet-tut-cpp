@@ -48,6 +48,18 @@ sf::Sprite *Tilemap::getSprite(unsigned int index, int i, int j)
 	return m_map[j][i]!=0?(m_tilesys->getTile(m_map[j][i])->getSprite(index, m_tilesys->getTs()->getDisplayWidth()*i, m_tilesys->getTs()->getDisplayHeight()*j)):NULL;
 }
 
+Tile *Tilemap::getTile(unsigned int i, unsigned int j)
+{
+	if(i<(unsigned int) m_width && j<(unsigned int) m_height)
+	{
+		return m_map[j][i]!=0?(m_tilesys->getTile(m_map[j][i])):NULL;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
 void Tilemap::draw(GameWindow *w)
 {	
 	for(int i = 0 ; i < m_width ; i++)

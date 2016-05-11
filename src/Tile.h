@@ -7,7 +7,7 @@
  */
 class Tile
 {
-private:	
+protected:	
 	
 	vector<sf::Sprite*> m_sprites; //!< sf::Sprite of the Tile (a Tile can be multisprite or monosprite)
 

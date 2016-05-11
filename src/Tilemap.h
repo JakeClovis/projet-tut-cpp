@@ -49,6 +49,7 @@ public:
 	 *  \param j y value
 	 */
 	sf::Sprite *getSprite(unsigned int index, int i, int j);
+	Tile *getTile(unsigned int i, unsigned int j);
 	void draw(GameWindow*);
 };
 

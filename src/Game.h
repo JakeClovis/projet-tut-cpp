@@ -5,6 +5,7 @@
 #include "GameWindow.h"
 #include "TileSystem.h"
 #include "Tilemap.h"
+#include "MapTile.h"
 #include "Controller.h"
 
 /*! \brief Controller that handles the game process
@@ -14,6 +15,7 @@ class Game: public Controller
 private:
 	
 	sf::View m_view; //!< container for the game context
+	bool m_isPlaying; //!< vaut vrai tant que la partie est en cours
 	/*! \brief called during the event management
 	 *
 	 * It will control user inputs, pause process, etc.

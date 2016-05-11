@@ -52,16 +52,13 @@ int main(int argc, char *argv[])
 			cout.rdbuf(coutBackup);
 			break;
 		case 's': //custom tile size
-			try
-			{
-				tileSize = stoi(string(optarg));
-			}
-			catch(invalid_argument const&e)
-			{
-				cerr << "stoi(\"" << optarg << "\"): invalid_argument exception" << endl;
-				cerr << "Try " << argv[0] << " -h for help." << endl;
-				exit(GENERIC_ERROR);
-			}
+				tileSize = atoi(optarg);
+				if(tileSize <= 0)
+				{
+					cerr << "atoi(\"" << optarg << "\"): incorrect value" << endl;
+					cerr << "Try " << argv[0] << " -h for help." << endl;
+					exit(GENERIC_ERROR);
+				}
 			break;
 		default: //invalid option
 			cout.rdbuf(coutBackup);

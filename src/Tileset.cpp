@@ -9,6 +9,24 @@ Tileset::Tileset(const sf::Texture *tex,
 	cout << "** Creating the Tileset " << this << " with the texture " << tex << endl;
 }
 
+template<>
+MapTile *Tileset::createTile<MapTile>(int i, int j, bool c, bool b)
+{
+	MapTile *t = (MapTile *) createTile(i, j);
+	t->setCollidable(c);
+	t->setBreakable(b);
+	return t;
+}
+
+template<>
+MapTile *Tileset::createTile<MapTile>(vector<int> i, vector<int> j, bool c, bool b)
+{
+	MapTile *t = (MapTile *) createTile(i, j);
+	t->setCollidable(c);
+	t->setBreakable(b);
+	return t;
+}
+
 const sf::Texture *Tileset::getTexture()
 {
 	return m_texture;
