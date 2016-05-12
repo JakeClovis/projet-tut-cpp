@@ -11,7 +11,7 @@ Tileset *TileSystem::getTs()
 }
 
 template<>
-inline void TileSystem::registerTile<MapTile>(unsigned int index, int i, int j, TileType ty, bool c, bool b)
+void TileSystem::registerTile<MapTile>(unsigned int index, int i, int j, TileType ty, bool c, bool b)
 {
 	MapTile *t = m_ts->createTile<MapTile>(i, j, ty, c, b);
 	if(index != 0)
@@ -25,7 +25,7 @@ inline void TileSystem::registerTile<MapTile>(unsigned int index, int i, int j, 
 }
 
 template<>
-inline void TileSystem::registerTile<MapTile>(unsigned int index, vector<int> i, vector<int> j, TileType ty, bool c, bool b)
+void TileSystem::registerTile<MapTile>(unsigned int index, vector<int> i, vector<int> j, TileType ty, bool c, bool b)
 {
 	MapTile *t = m_ts->createTile<MapTile>(i, j, ty, c, b);
 	if(index != 0)
