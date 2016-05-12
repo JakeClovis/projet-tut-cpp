@@ -52,9 +52,7 @@ public:
 		cout << "test" << endl;
 		return new T(*newSprite, ty);
 	}
-
-	inline MapTile *createTile(int i, int j, TileType ty, bool c, bool b);
-
+	
 	template<typename T = Tile>
 	/*! \brief create a Tile with multiples sf::Sprite at given coordinates on the sf::Texture (in terms of rows and cols, not pixels)
 	 *  \param i x values
@@ -81,8 +79,6 @@ public:
 
 		return t;
 	}
-
-	inline MapTile *createTile(vector<int> i, vector<int> j, TileType ty, bool c, bool b);
 
 	/*! \brief getter of m_texture
 	 *  \return m_texture

@@ -10,7 +10,7 @@ Tileset::Tileset(const sf::Texture *tex,
 }
 
 template<>
-MapTile *Tileset::createTile<MapTile>(int i, int j, TileType ty, bool c, bool b)
+inline MapTile *Tileset::createTile<MapTile>(int i, int j, TileType ty, bool c, bool b)
 {
 	MapTile *t = (MapTile *) createTile(i, j, ty);
 	t->setCollidable(c);
@@ -19,7 +19,7 @@ MapTile *Tileset::createTile<MapTile>(int i, int j, TileType ty, bool c, bool b)
 }
 
 template<>
-MapTile *Tileset::createTile<MapTile>(vector<int> i, vector<int> j, TileType ty, bool c, bool b)
+inline MapTile *Tileset::createTile<MapTile>(vector<int> i, vector<int> j, TileType ty, bool c, bool b)
 {
 	MapTile *t = (MapTile *) createTile(i, j, ty);
 	t->setCollidable(c);
