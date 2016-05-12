@@ -9,33 +9,34 @@
 #include "Controller.h"
 #include "LivingEntity.h"
 
-/*! \brief Controller that handles the game process
+/*! \brief contrôleur de partie
  */
 class Game: public Controller
 {
 private:
 	
-	sf::View m_view; //!< container for the game context
-	sf::Clock m_timer; //!< gestion du temps
-	bool m_isPlaying; //!< vaut vrai tant que la partie est en cours
-	LivingEntity *m_player1, *m_player2;
-	/*! \brief called during the event management
+	sf::View m_view; //!< conteneur du contexte de jeu
+	sf::Clock m_timer; //!< permet la gestion du temps écoulé entre deux itérations de la boucle de jeu
+	bool m_isPlaying; //!< permet de vérifier si la partie est en cours
+	LivingEntity *m_player1, //!< le joueur 1
+				 *m_player2; //!< le joueur 2
+	/*! \brief appelé durant la boucle de jeu
 	 *
-	 * It will control user inputs, pause process, etc.
+	 * La gestion des évènements du jeu comprend les entrées utilisateur, la demande de mise en pause, etc.
 	 */
 	void manageEvents();
 
 public:
 
-	/*! \brief default constructor
+	/*! \brief crée une partie
 	 *  \see Controller::Controller(GameWindow *window)
 	 */
 	Game(GameWindow *window);
-	/*! \brief destructor
+	/*! \brief met fin au contrôleur de partie
 	 *  \see Controller::~Controller()
 	 */
 	virtual ~Game();
-	/*! \brief main method that manages the lifecycle of the Controller
+	/*! \brief lance une partie et gère son cycle de vie
 	 *  \see void Controller::start()
 	 */
 	void start();

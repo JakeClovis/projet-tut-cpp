@@ -9,38 +9,40 @@
 #include "TileSystem.h"
 #include "ResourceAllocator.h"
 
-/*! \brief Abstract class for the controllers of the game
+/*! \brief classe abstraite des contrôleurs de jeu
+ *  
+ *  Un contrôleur est la partie décisionnelle du modèle MVC : il récupère les données du modèle, gère les évènements utilisateur, et programme la mise à jour de la vue.
  */
 class Controller
 {
 protected:
 
-	GameWindow *m_window; //!< pointer to the GameWindow that the Controller manages
-	map<string, sf::Texture*> m_textures; //!< a referenced list of sf::texture handled by the controller
-	map<string, sf::Font*> m_fonts; //!< a referenced list of sf::Texture handled by the controller
-	map<string, Tileset*> m_tilesets; //!< a referenced list of Tileset handled by the controller
-	map<string, TileSystem*> m_tilesystems; //!< a referenced list of TileSystem handled by the controller
-	map<string, sf::Music*> m_musics; //!< a referenced list of sf::Music handled by the controller
-	/*! \brief called during the event management
+	GameWindow *m_window; //!< la vue que le contrôleur gère
+	map<string, sf::Texture*> m_textures; //!< les textures que le contrôleur contient, référencées par un nom
+	map<string, sf::Font*> m_fonts; //!< les fontes que le contrôleur contient, référencées par un nom
+	map<string, Tileset*> m_tilesets; //!< les Tileset que le contrôleur contient, référencées par un nom
+	map<string, TileSystem*> m_tilesystems; //!< les TileSystem que le contrôleur contient, référencées par un nom
+	map<string, sf::Music*> m_musics; //!< les musiques que le contrôleur contient, référencées par un nom
+	/*! \brief fonction technique contenant la routine de gestion des évènements utilisateurs
 	 */
 	virtual void manageEvents() = 0;
 
 public:
 
-	/*! \brief default constructor
+	/*! \brief crée un contrôleur
 	 *
-	 *  Creates all the resources the Controller needs.
-	 *  \param pointer to the GameWindow that the Controller will manage
+	 *  Habituellement, la construction d'un contrôleur est aussi la phase d'initialisation des ressources, au moyen des méthodes de la classe statique ResourceAllocator.
+	 *  \param window la vue que le contrôleur gère
 	 */
 	Controller(GameWindow *window);
-	/*! \brief destructor
+	/*! \brief met fin au contrôleur
 	 *
-	 *  Deallocates all the referenced lists of the Controller.
+	 *  Il faut libérer les ressources du contrôleur à ce moment là. Attention à n'en oublier aucune pour éviter les fuites de mémoire.
 	 */
 	virtual ~Controller();
-	/*! \brief starts the Controller
+	/*! \brief démarre le contrôleur
 	 *
-	 *  This method contains the event loop of the GameWindow, so this method will only stops when the Controller must die.
+	 *  Cette méthode doit contenir la boucle d'évènements. Ainsi, cette méthode ne se termine que quand le moment est venu de cesser ses activités (par exemple lorsque l'on ferme la vue qu'il gère, ou lorsque la partie se termine...).
 	 */
 	virtual void start() = 0;
 };

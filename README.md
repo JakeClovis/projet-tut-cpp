@@ -1,5 +1,8 @@
 ﻿# projet-tut-cpp
 
+## TODO
+Ajouter une interface IHandlable pour tous les objets affichés qui ont des évènements à gérer (joueur, bouton, etc.)
+
 ## Questions
 - Mode solo ou mode multijoueur ?
 - Si mode multijoueur combien de joueur ? 2

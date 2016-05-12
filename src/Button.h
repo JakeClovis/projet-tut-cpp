@@ -5,30 +5,31 @@
 #include "IDrawable.h"
 #include <SFML/Graphics/Rect.hpp>
 
-/*! \brief Simple class to manage buttons
+/*! \brief gestion de boutons cliquables
  */
 class Button: public sf::IntRect, public IDrawable
 {
 protected:
 
-	sf::Text m_text; //!< text displayed by the Button
-	void (*m_callback)(void*); //!< pointer to the callback function
+	sf::Text m_text; //!< texte affiché par le bouton
+	void (*m_callback)(void*); //!< fonction de callback (à déclencher en cas de clic)
 
 public:
 
-	/*! \brief default constructor for Button
-	 *  \param x position of the top-left corner of the Button 
-	 *  \param y position of the top-left corner of the Button
-	 *  \param tilesys pointer to the TileSystem that will be used by the Button
-	 *  \param text the text that will be displayed by the Button
-	 *  \param font pointer to the sf::Font that will be used by the Button
-	 *  \param callback the callback function of the Button
+	/*! \brief crée un bouton avec les paramètres renseignés
+	 *  \param x abscisse du bouton 
+	 *  \param y ordonnée du bouton
+	 *  \param tilesys TileSystem utilisé par le bouton
+	 *  \param text légende du bouton
+	 *  \param font fonte de caractère de la légende
+	 *  \param callback action à entreprendre en cas de clic du bouton
 	 */
 	Button(TileSystem *tilesys, int x, int y, string text, sf::Font *font, void(*callback)(void*));
 	virtual ~Button();
-	/*! \brief dialer for the callback function
+	/*! \brief combiné d'appel pour la fonction de callback
+	 *  \param args argument générique de la fonction de callback (utiliser une structure si la fonction de callback a besoin de plusieurs paramètres)
 	 */
-	void callback(void*);
+	void callback(void* args);
 	void draw(GameWindow*);
 	
 };

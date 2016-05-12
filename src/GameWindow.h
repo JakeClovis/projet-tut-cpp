@@ -5,46 +5,49 @@
 
 using namespace std;
 
-/*! \brief The main window, contains general display informations
+/*! \brief vue principale du jeu
+ *
+ *  Une vue est la partie affichage du modèle MVC. Elle présente à l'écran tout ce que l'utilisateur doit voir.
  */
 class GameWindow : public sf::RenderWindow
 {
 private:
 
-	int m_tileSize; //!< regular size of a square tile, it's the main unit used for the display
-	int m_width, m_height; //!< width and height of the window in terms of Tiles
-	bool m_toRectifyRatio; //!< technical boolean used to manage the ratio of the window
+	int m_tileSize; //!< unité principale d'affichage, la taille régulière d'un tile carré classique
+	int m_width, //!< largeur en m_tileSize de la fenêtre
+		m_height; //!< hauteur en m_tileSize de la fenêtre
+	bool m_toRectifyRatio; //!< booléen technique utilisé pour savoir si une rectification du ratio est nécessaire
 
 public:
 
-	/*! \brief creates a window with the default tile size (DEFAULT_TILE_SIZE as defined in Global.h)
-	 *  \param width width in terms of Tiles
-	 *  \param height height in terms of Tiles
+	/*! \brief crée une fenêtre avec la taille par défaut (DEFAULT_TILE_SIZE tel que défini dans Global.h)
+	 *  \param width largeur
+	 *  \param height hauteur
 	 */
 	void create(int width, int height);
-	/*! \brief creates a window with a custom tile size
-	 *  \param the custom tile size
-	 *  \param width width in terms of Tiles
-	 *  \param height height in terms of Tiles
+	/*! \brief crée une fenêtre avec une taille de tile personnalisée
+	 *  \param tileSize taille de tile personnalisée
+	 *  \param width largeur
+	 *  \param height hauteur
 	 */
 	void create(int tileSize, int width, int height);
-	/*! \brief getter of m_tileSize
+	/*! \brief accesseur de m_tileSize
 	 *  \return m_tileSize
 	 */
 	int getTileSize();
-	/*! \brief getter of m_width
+	/*! \brief accesseur de m_width
 	 *  \return m_width
 	 */
 	int getWidth();
-	/*! \brief getter of m_height
+	/*! \brief accesseur de m_height
 	 *  \return m_height
 	 */
 	int getHeight();
-	/*! \brief modifies the ratio to correspond to m_width:m_height whenever it's needed
+	/*! \brief rectifie le ratio à m_width:m_height
 	 */
 	void rectifyRatio();
-	/*! \brief executes actions based on the sf::Event in parameter
-	 *  \param event the event to use
+	/*! \brief gestion d'évènements
+	 *  \param event l'évènement à utiliser
 	 */
 	void manageEvents(sf::Event &event);
 };
