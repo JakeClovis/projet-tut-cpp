@@ -38,6 +38,8 @@ int main(int argc, char *argv[])
 	streambuf *coutBackup = cout.rdbuf(&nullStream);
 	int options, tileSize = 0;
 
+	srand(time(NULL));
+
 	if(DEBUG_MODE) //Forces the verbose mode (for debugging purposes)
 		cout.rdbuf(coutBackup);
 

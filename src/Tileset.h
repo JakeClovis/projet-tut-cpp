@@ -37,7 +37,7 @@ public:
 	 *  \param i x value
 	 *  \param j y value
 	 */
-	T *createTile(int i, int j, bool c=NULL, bool b=NULL)
+	T *createTile(int i, int j, TileType ty=TileType::DEFAULT, bool c=NULL, bool b=NULL)
 	{
 		sf::Sprite *newSprite = new sf::Sprite();
 		cout << "** Setting up the sf::Sprite " << newSprite << " via Tileset " << this << endl;
@@ -50,7 +50,7 @@ public:
 		newSprite->setScale((float)m_displayWidth/(float)m_width,
 						(float)m_displayHeight/(float)m_height);
 		cout << "test" << endl;
-		return new T(*newSprite);
+		return new T(*newSprite, ty);
 	}
 	
 	template<typename T = Tile>
@@ -58,9 +58,9 @@ public:
 	 *  \param i x values
 	 *  \param j y values
 	 */
-	T *createTile(vector<int> i,vector <int> j, bool c=NULL, bool b=NULL)
+	T *createTile(vector<int> i,vector <int> j, TileType ty=TileType::DEFAULT, bool c=NULL, bool b=NULL)
 	{
-		T *t = new T();
+		T *t = new T(ty);
 		sf::Sprite *newSprite = NULL;
 		for(unsigned int k = 0 ; (k < i.size()) && (k < j.size()) ; k++)
 		{

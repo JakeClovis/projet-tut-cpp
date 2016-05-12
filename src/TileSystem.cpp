@@ -11,9 +11,9 @@ Tileset *TileSystem::getTs()
 }
 
 template<>
-void TileSystem::registerTile<MapTile>(unsigned int index, int i, int j, bool c, bool b)
+void TileSystem::registerTile<MapTile>(unsigned int index, int i, int j, TileType ty, bool c, bool b)
 {
-	MapTile *t = m_ts->createTile<MapTile>(i, j, c, b);
+	MapTile *t = m_ts->createTile<MapTile>(i, j, ty, c, b);
 	if(index != 0)
 	{
 		cout << "** Registering the Tile " << t << " in the TileSystem " << this << endl;
@@ -25,9 +25,9 @@ void TileSystem::registerTile<MapTile>(unsigned int index, int i, int j, bool c,
 }
 
 template<>
-void TileSystem::registerTile<MapTile>(unsigned int index, vector<int> i, vector<int> j, bool c, bool b)
+void TileSystem::registerTile<MapTile>(unsigned int index, vector<int> i, vector<int> j, TileType ty, bool c, bool b)
 {
-	MapTile *t = m_ts->createTile<MapTile>(i, j, c, b);
+	MapTile *t = m_ts->createTile<MapTile>(i, j, ty, c, b);
 	if(index != 0)
 	{
 		cout << "** Registering the Tile " << t << " in the TileSystem " << this << endl;
@@ -60,4 +60,9 @@ TileSystem::~TileSystem()
 	{
 		delete element->second;
 	}
+}
+
+int TileSystem::getSize()
+{
+	return m_tilesList.size();
 }

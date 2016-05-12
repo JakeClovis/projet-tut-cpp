@@ -6,8 +6,6 @@
 #include "TileSystem.h"
 #include "Tilemap.h"
 
-enum Orientation { TOP=1, RIGHT=2, BOTTOM=3, LEFT=4 };
-
 class Entity: public IDrawable
 {
 protected:

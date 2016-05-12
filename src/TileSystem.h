@@ -30,9 +30,9 @@ public:
 	 *  \param i x coordinate of the sf::Sprite in the Tileset
 	 *  \param j y coordinate of the sf::Sprite in the Tileset
 	 */
-	void registerTile(unsigned int index, int i, int j, bool c=NULL, bool b=NULL)
+	void registerTile(unsigned int index, int i, int j, TileType ty=TileType::DEFAULT, bool c=NULL, bool b=NULL)
 	{
-		T *t = m_ts->createTile<T>(i, j);
+		T *t = m_ts->createTile<T>(i, j, ty);
 		if(index != 0)
 		{
 			cout << "** Registering the Tile " << t << " in the TileSystem " << this << endl;
@@ -49,9 +49,9 @@ public:
 	 *  \param i x coordinates of the sf::Sprite in the Tileset
 	 *  \param j y coordinates of the sf::Sprite in the Tileset
 	 */
-	void registerTile(unsigned int index, vector<int> i, vector<int> j, bool c=NULL, bool b=NULL)
+	void registerTile(unsigned int index, vector<int> i, vector<int> j, TileType ty=TileType::DEFAULT, bool c=NULL, bool b=NULL)
 	{
-		T *t = m_ts->createTile<T>(i, j);
+		T *t = m_ts->createTile<T>(i, j, ty);
 		if(index != 0)
 		{
 			cout << "** Registering the Tile " << t << " in the TileSystem " << this << endl;
@@ -71,6 +71,8 @@ public:
 	 *  \returns pointer to Tileset
 	 */
 	Tileset *getTs();
+	
+	int getSize();
 };
 
 #endif //_BOMBERMAN_TILE_SYSTEM_H_

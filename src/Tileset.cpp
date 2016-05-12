@@ -10,18 +10,18 @@ Tileset::Tileset(const sf::Texture *tex,
 }
 
 template<>
-MapTile *Tileset::createTile<MapTile>(int i, int j, bool c, bool b)
+MapTile *Tileset::createTile<MapTile>(int i, int j, TileType ty, bool c, bool b)
 {
-	MapTile *t = (MapTile *) createTile(i, j);
+	MapTile *t = (MapTile *) createTile(i, j, ty);
 	t->setCollidable(c);
 	t->setBreakable(b);
 	return t;
 }
 
 template<>
-MapTile *Tileset::createTile<MapTile>(vector<int> i, vector<int> j, bool c, bool b)
+MapTile *Tileset::createTile<MapTile>(vector<int> i, vector<int> j, TileType ty, bool c, bool b)
 {
-	MapTile *t = (MapTile *) createTile(i, j);
+	MapTile *t = (MapTile *) createTile(i, j, ty);
 	t->setCollidable(c);
 	t->setBreakable(b);
 	return t;

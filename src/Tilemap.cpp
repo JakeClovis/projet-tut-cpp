@@ -12,6 +12,7 @@ void Tilemap::setMap(const vector<vector<unsigned int>> &map)
 	for(unsigned int i = 0 ; i < m_map.size() ; i++)
 	{
 		m_map.pop_back();
+		m_metadata.pop_back();
 	}
 
 	for(int i = 0 ; i < m_height ; i++)
@@ -19,6 +20,17 @@ void Tilemap::setMap(const vector<vector<unsigned int>> &map)
 		if(map[i].size() == (unsigned int) m_width)
 		{
 			m_map.push_back(map[i]);
+			m_metadata.push_back({});
+			for(int j = 0 ; j < m_width ; j++)
+			{
+				Tile *tmp;
+				m_metadata[i].push_back(-1); // default metadata
+				if((tmp = m_tilesys->getTile(map[i][j])) != NULL)
+				{
+					if(tmp->getType() == TileType::RANDOMIZED)
+						m_metadata[i][j] = rand()%tmp->getSpriteCount();
+				}
+			}
 		}
 		else
 			cout << "(!)WARNING:Incorrect width for the new map's line #" << i << " of Tilemap " << this << " (line ommitted)" << endl;
@@ -65,12 +77,29 @@ Tile *Tilemap::getTile(unsigned int i, unsigned int j)
 	}
 }
 
+int Tilemap::getMetadata(unsigned int i, unsigned int j)
+{
+	if(i<(unsigned int) m_width && j<(unsigned int) m_height)
+	{
+		return m_metadata[j][i];
+	}
+	else
+	{
+		return -2; //code d'erreur
+	}
+
+}
+
 void Tilemap::draw(GameWindow *w)
 {	
 	for(int i = 0 ; i < m_width ; i++)
 		for(int j = 0 ; j < m_height ; j++)
 		{
-			sf::Sprite *toDraw = getSprite(i, j);
+			sf::Sprite *toDraw;
+			if(m_metadata[j][i] != -1)
+				toDraw = getSprite(m_metadata[j][i], i, j);
+			else
+				toDraw = getSprite(i, j);
 			if(toDraw != NULL) 
 				w->draw(*toDraw);
 		}

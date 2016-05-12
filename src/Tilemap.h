@@ -12,6 +12,7 @@ class Tilemap: public IDrawable
 private:
 
 	vector<vector<unsigned int>> m_map; //!<  map of indexes (0 means no Tile, any other positive integer is the index of a Tile in m_tilesys)
+	vector<vector<int>> m_metadata; //!< metadata
 	int m_width; //!< actual width of the m_map
 	int m_height; //!< actual height of the m_map
 
@@ -50,6 +51,7 @@ public:
 	 */
 	sf::Sprite *getSprite(unsigned int index, int i, int j);
 	Tile *getTile(unsigned int i, unsigned int j);
+	int getMetadata(unsigned int i, unsigned int j);
 	void draw(GameWindow*);
 };
 

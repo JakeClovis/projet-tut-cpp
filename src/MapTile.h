@@ -18,10 +18,10 @@ public:
 	/*! \brief constructeur par défaut
 	 *  \param s premier sf::Sprite du MapTile
 	 */
-	MapTile(sf::Sprite &s);
+	MapTile(sf::Sprite &s, TileType type=TileType::DEFAULT);
 	/*! \brief constructeur par vide
 	 */
-	MapTile();
+	MapTile(TileType type=TileType::DEFAULT);
 	void setCollidable(bool c);
 	void setBreakable(bool b);
 	bool isCollidable();

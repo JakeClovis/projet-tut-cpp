@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <unistd.h>
+#include <ctime>
 
 #define DEFAULT_TILE_SIZE 50
 #define DEBUG_MODE true
@@ -21,6 +22,9 @@
 #define TILESET_ERROR 3 //Problem in Tileset allocation
 #define MUSIC_ERROR 4 //Problem in Music loading
 #define FONT_ERROR 5 //Problem in Font loading
+
+enum TileType { DEFAULT=1, RANDOMIZED=2 };
+enum Orientation { TOP=1, RIGHT=2, BOTTOM=3, LEFT=4 };
 
 using namespace std;
 

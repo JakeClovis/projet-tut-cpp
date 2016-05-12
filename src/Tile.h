@@ -10,6 +10,8 @@ class Tile
 protected:	
 	
 	vector<sf::Sprite*> m_sprites; //!< sf::Sprite of the Tile (a Tile can be multisprite or monosprite)
+	TileType m_type;
+
 
 public:
 
@@ -18,12 +20,12 @@ public:
 	 *  It shouldn't be called directly. Instead it should be called via T *Tileset::createTile(int i, int j)
 	 *  \param s the sf::Sprite that will be added
 	 */
-	Tile(sf::Sprite &s);
+	Tile(sf::Sprite &s, TileType type=TileType::DEFAULT);
 	/*! \brief empty constructor that initializes a Tile with no sf::Sprite in it
 	 *
 	 *  It shouldn't be called directly. Instead it should be called via T *Tileset::createTile(vector<int> i, vector<int> j)
 	 */
-	Tile();
+	Tile(TileType type=TileType::DEFAULT);
 	/*! \brief destructor
 	 *
 	 *  It will deallocates the vector of sf::Sprite, so be VERY careful, don't forget that when you add a sf::Sprite to a Tile, it should be only used in this Tile!
@@ -33,7 +35,7 @@ public:
 	 *  \param s the sf::Sprite that will be added
 	 */
 	void addSprite(sf::Sprite &s);
-	/*! \brief gets the first sf::Sprite of the vector of sf::Sprite at the given coordinates (useful for a monosprite Tile)
+	/*! \brief gets the first (or a random one if m_type is RANDOMIZED) sf::Sprite of the vector of sf::Sprite at the given coordinates (useful for a monosprite Tile)
 	 *
 	 *  Attention please: the given coordinates depends of the original sf::Sprite. As this method returns a pointer, calling it twice with different coordinates will make the first call pointless. Don't forget that if you get unexpected results, for instance the same sf::Sprite drawn a trouzillion times at the same place!
 	 *  \param x the x coordinate where the sf::Sprite will be drawn
@@ -48,6 +50,8 @@ public:
 	 *  \param y the y coordinate where the sf::Sprite will be drawn
 	 */
 	sf::Sprite *getSprite(unsigned int index, float x, float y);
+	TileType getType();
+	int getSpriteCount();
 };
 
 #endif //_BOMBERMAN_TILE_H_

@@ -1,10 +1,10 @@
 #include "MapTile.h"
 
-MapTile::MapTile(): Tile()
+MapTile::MapTile(TileType type): Tile(type)
 {
 }
 
-MapTile::MapTile(sf::Sprite &s): Tile(s)
+MapTile::MapTile(sf::Sprite &s, TileType type): Tile(s, type)
 {
 }
 

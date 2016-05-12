@@ -1,12 +1,13 @@
 #include "Tile.h"
 
-Tile::Tile(sf::Sprite &s)
+Tile::Tile(sf::Sprite &s, TileType type): m_type(type)
+
 {
 	cout << "** Creating the Tile " << this << " with the sprite " << &s << endl;
 	m_sprites.push_back(&s);
 }
 
-Tile::Tile()
+Tile::Tile(TileType type): m_type(type)
 {
 	cout << "** Creating the Tile " << this << " with no sprite in it" << endl;
 }
@@ -21,8 +22,8 @@ sf::Sprite *Tile::getSprite(float x, float y)
 {
 	if(m_sprites.size() > 0)
 	{
-		m_sprites[0]->setPosition(sf::Vector2f(x, y));
-		return m_sprites[0];
+		unsigned int index = 0;
+		return getSprite(index, x, y);
 	}
 	else
 		return NULL;
@@ -48,4 +49,14 @@ Tile::~Tile()
 		cout << " * Deallocating the Sprite " << m_sprites[i] << endl;
 		delete m_sprites[i];
 	}
+}
+
+TileType Tile::getType()
+{
+	return m_type;
+}
+
+int Tile::getSpriteCount()
+{
+	return m_sprites.size();
 }
