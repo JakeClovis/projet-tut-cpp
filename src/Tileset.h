@@ -10,7 +10,7 @@
 class Tileset
 {
 private:
-	
+
 	const sf::Texture *m_texture; //!< pointer to the sf::Texture of the Tileset
 	int m_rows; //!< number of rows in the sf::Texture
 	int m_cols; //!< number of columns in the sf::Texture
@@ -31,7 +31,7 @@ public:
 	 *  \param displayHeight display height
 	 */
 	Tileset(const sf::Texture *tex, int rows, int cols, int width, int height, int displayWidth, int displayHeight);
-	
+
 	template<typename T = Tile>
 	/*! \brief create a Tile with a single sf::Sprite at given coordinates on the sf::Texture (in terms of rows and cols, not pixels)
 	 *  \param i x value
@@ -52,8 +52,8 @@ public:
 		cout << "test" << endl;
 		return new T(*newSprite, ty);
 	}
-	
-	MapTile *createTile(int i, int j, TileType ty, bool c, bool b);
+
+	inline MapTile *createTile(int i, int j, TileType ty, bool c, bool b);
 
 	template<typename T = Tile>
 	/*! \brief create a Tile with multiples sf::Sprite at given coordinates on the sf::Texture (in terms of rows and cols, not pixels)
@@ -78,11 +78,11 @@ public:
 							(float)m_displayHeight/(float)m_height);
 			t->addSprite(*newSprite);
 		}
-	
+
 		return t;
 	}
 
-	MapTile *createTile(vector<int> i, vector<int> j, TileType ty, bool c, bool b);
+	inline MapTile *createTile(vector<int> i, vector<int> j, TileType ty, bool c, bool b);
 
 	/*! \brief getter of m_texture
 	 *  \return m_texture
