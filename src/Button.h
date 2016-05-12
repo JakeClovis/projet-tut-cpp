@@ -11,7 +11,6 @@ class Button: public sf::IntRect, public IDrawable
 {
 protected:
 
-	TileSystem *m_tilesys; //!< pointer to the TileSystem used by the Button (it should contain two tiles, the first to display the Button at its normal state, and the second when the Button is hovered)
 	sf::Text m_text; //!< text displayed by the Button
 	void (*m_callback)(void*); //!< pointer to the callback function
 
@@ -25,7 +24,7 @@ public:
 	 *  \param font pointer to the sf::Font that will be used by the Button
 	 *  \param callback the callback function of the Button
 	 */
-	Button(int x, int y, TileSystem *tilesys, string text, sf::Font *font, void(*callback)(void*));
+	Button(TileSystem *tilesys, int x, int y, string text, sf::Font *font, void(*callback)(void*));
 	virtual ~Button();
 	/*! \brief dialer for the callback function
 	 */

@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(int x, int y, TileSystem *tilesys, string text, sf::Font *font, void(*callback)(void*)):sf::IntRect(x, y, 0, 0), m_tilesys(tilesys), m_callback(callback)
+Button::Button(TileSystem *tilesys, int x, int y, string text, sf::Font *font, void(*callback)(void*)):sf::IntRect(x, y, 0, 0), IDrawable(tilesys), m_callback(callback)
 {
 	int i;
 

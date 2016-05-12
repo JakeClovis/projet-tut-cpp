@@ -11,7 +11,6 @@ class Tilemap: public IDrawable
 {
 private:
 
-	TileSystem *m_tilesys; //!< pointer to the TileSystem used by the Tilemap
 	vector<vector<unsigned int>> m_map; //!<  map of indexes (0 means no Tile, any other positive integer is the index of a Tile in m_tilesys)
 	int m_width; //!< actual width of the m_map
 	int m_height; //!< actual height of the m_map
@@ -42,6 +41,7 @@ public:
 	 *  \param i x value
 	 *  \param j y value
 	 */
+	sf::Vector2i toTileCoord(sf::Vector2f c);
 	sf::Sprite *getSprite(int i, int j);
 	/*! \brief get the sf::Sprite of the Tile of given index, at given coordinates
 	 *  \param index index of the sf::Sprite to get

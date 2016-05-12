@@ -15,6 +15,7 @@ protected:
 
 public:
 
+	IDrawable(TileSystem *tilesys);
 	/*! \brief abstract class that the daughter class will implements, depending of how it's drawn
 	 * \param window pointer to the window on which the object will be drawn
 	 */

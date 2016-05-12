@@ -1,6 +1,7 @@
 LIBS=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 CC=$(CROSS)g++ -c -Wall -std=c++11 $(DEFINES)
 SRCS=src/main.cpp\
+	 src/IDrawable.cpp\
 	 src/Button.cpp\
 	 src/Controller.cpp\
 	 src/Game.cpp\
@@ -11,7 +12,9 @@ SRCS=src/main.cpp\
 	 src/Tilemap.cpp\
 	 src/Tileset.cpp\
 	 src/TileSystem.cpp\
-	 src/MapTile.cpp
+	 src/MapTile.cpp\
+	 src/Entity.cpp\
+	 src/LivingEntity.cpp
 OBJ=$(subst src/,output/, $(subst .cpp,.o, $(SRCS)))
 
 all: bomberman

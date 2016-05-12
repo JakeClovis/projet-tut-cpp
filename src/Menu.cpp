@@ -16,7 +16,7 @@ Menu::Menu(GameWindow *window): Controller(window)
 
 	ResourceAllocator::allocateFont(m_fonts, "default", "res/fonts/e4_2017.ttf");
 
-	playButton = new Button(0, 2*m_window->getSize().y/3, m_tilesystems["button"], "Nouvelle partie", m_fonts["default"],
+	playButton = new Button(m_tilesystems["button"], 0, 2*m_window->getSize().y/3, "Nouvelle partie", m_fonts["default"],
 		[](void *arg) -> void {
 				GameWindow *w = (GameWindow*)arg;
 				Game *g = new Game(w);
@@ -24,7 +24,7 @@ Menu::Menu(GameWindow *window): Controller(window)
 				delete g;
 		});
 	playButton->left = m_window->getSize().x/2 - playButton->width/2; 
-	quitButton = new Button(0, +2*m_window->getSize().y/3+3*m_tilesystems["button"]->getTs()->getDisplayHeight()/2, m_tilesystems["button"], "Quitter", m_fonts["default"],
+	quitButton = new Button(m_tilesystems["button"], 0, +2*m_window->getSize().y/3+3*m_tilesystems["button"]->getTs()->getDisplayHeight()/2, "Quitter", m_fonts["default"],
 		[](void *arg) -> void {
 				GameWindow *w = (GameWindow*)arg;
 				w->close();

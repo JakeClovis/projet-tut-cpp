@@ -1,6 +1,6 @@
 #include "Tilemap.h"
 
-Tilemap::Tilemap(TileSystem *tilesys, int width, int height): m_tilesys(tilesys), m_width(width), m_height(height)
+Tilemap::Tilemap(TileSystem *tilesys, int width, int height): IDrawable(tilesys), m_width(width), m_height(height)
 {
 	cout << "** Creating the Tilemap " << this << " using the TileSystem " << tilesys << endl;
 }
@@ -36,6 +36,11 @@ int Tilemap::getWidth()
 int Tilemap::getHeight()
 {
 	return m_height;
+}
+
+sf::Vector2i Tilemap::toTileCoord(sf::Vector2f c)
+{
+	return sf::Vector2i(c.x/m_tilesys->getTs()->getDisplayWidth(), c.y/m_tilesys->getTs()->getDisplayHeight());
 }
 
 sf::Sprite *Tilemap::getSprite(int i, int j)

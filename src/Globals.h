@@ -11,6 +11,11 @@
 #define G_VERSION "dev"
 #define G_AUTHORS "Guillaume JORANDON & Clément SIMON"
 
+#define SPEED_FACTOR 3 //Facteur de vitesse global
+
+#define ABS(X) (((X)<0?(-X):(X)))
+#define SGN(X) (((X)>0?(true):(false)))
+
 #define GENERIC_ERROR 1 //Generic problem (arguments from the command line, etc.)
 #define TEXTURE_ERROR 2 //Problem in Texture allocation
 #define TILESET_ERROR 3 //Problem in Tileset allocation
