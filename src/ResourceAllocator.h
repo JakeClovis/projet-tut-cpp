@@ -7,42 +7,42 @@
 #include "Tileset.h"
 #include "TileSystem.h"
 
-/*! \brief static class to store resources in referenced lists
+/*! \brief classe statique chargée de fournir des fonctions d'allocation de ressource
  */
 class ResourceAllocator
 {
 public:
 
-	/*! \brief allocates a sf::Texture
-	 *  \param m pointer to the referenced list that will store the resource
-	 *  \param index string index in the list
-	 *  \param path path to the resource
+	/*! \brief indexe une texture
+	 *  \param m liste référencée qui stockera la ressource
+	 *  \param index nom de la ressource
+	 *  \param path chemin d'accès de la ressource sur le disque
 	 */
 	static void allocateTexture(map<string, sf::Texture*> &m, const string index, const string path);
-	/*! \brief allocates a sf::Music
-	 *  \param m pointer to the referenced list that will store the resource
-	 *  \param index string index in the list
-	 *  \param path path to the resource
-	 *  \param isLoop true if the sf::Music is a loop song
+	/*! \brief indexe une musique
+	 *  \param m liste référencée qui stockera la ressource
+	 *  \param index nom de la ressource
+	 *  \param path chemin d'accès de la ressource sur le disque
+	 *  \param isLoop vrai si la musique se joue en boucle
 	 */
 	static void allocateMusic(map<string, sf::Music*> &m, const string index, const string path, bool isLoop=false);
-	/*! \brief allocates a sf::Font
-	 *  \param m pointer to the referenced list that will store the resource
-	 *  \param index string index in the list
-	 *  \param path path to the resource
+	/*! \brief indexe une fonte
+	 *  \param m liste référencée qui stockera la ressource
+	 *  \param index nom de la ressource
+	 *  \param path chemin d'accès de la ressource sur le disque
 	 */
 	static void allocateFont(map<string, sf::Font*> &m, const string index, const string path);
 
-	/*! \brief allocates a Tileset
-	 *  \param m pointer to the referenced list that will store the resource
-	 *  \param index string index in the list
-	 *  \param t pointer to the Tileset to store
+	/*! \brief indexe un Tileset
+	 *  \param m liste référencée qui stockera la ressource
+	 *  \param index nom de la ressource
+	 *  \param t Tileset à indexer
 	 */
 	static void allocateTileset(map<string, Tileset*> &m, const string index, Tileset *t);
-	/*! \brief allocates a TileSystem
-	 *  \param m pointer to the referenced list that will store the resource
-	 *  \param index string index in the list
-	 *  \param t pointer to the Tileset that will be used by the TileSystem
+	/*! \brief indexe un TileSystem
+	 *  \param m liste référencée qui stockera la ressource
+	 *  \param index nom de la ressource
+	 *  \param t Tileset que le TileSystem utilisera
 	 */
 	static void allocateTileSystem(map<string, TileSystem*> &m, const string index, Tileset *t);
 };

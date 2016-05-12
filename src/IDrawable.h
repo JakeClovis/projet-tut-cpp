@@ -5,19 +5,21 @@
 #include "TileSystem.h"
 #include "GameWindow.h"
 
-/*! \brief Interface implemented by every class that can be drawn
+/*! \brief Interface implémentée par chaque classe qui peut être affichée
  */
 class IDrawable
 {
 protected:
 
-	TileSystem *m_tilesys; //!< Any drawable object has a TileSystem
+	TileSystem *m_tilesys; //!< Un objet dessinable a toujours un TileSystem
 
 public:
 
+	/*! \brief constructeur à appeler lors de la construction des classes filles pour assigner une valeur au pointeur sur le TileSystem du IDrawable
+	 */
 	IDrawable(TileSystem *tilesys);
-	/*! \brief abstract class that the daughter class will implements, depending of how it's drawn
-	 * \param window pointer to the window on which the object will be drawn
+	/*! \brief contrat de l'interface : une classe fille devra implémenter cette méthode en fonction de comment elle est affichée
+	 * \param window fenêtre sur laquelle on dessine
 	 */
 	virtual void draw(GameWindow* window) = 0;
 };

@@ -15,16 +15,30 @@ protected:
 
 public:
 
-	/*! \brief constructeur par défaut
+	/*! \brief crée un MapTile avec un premier sf::Sprite
 	 *  \param s premier sf::Sprite du MapTile
+	 *  \param type le type de tile
 	 */
 	MapTile(sf::Sprite &s, TileType type=TileType::DEFAULT);
-	/*! \brief constructeur par vide
+	/*! \brief crée un MapTile sans sf::Sprite
+	 *  \param type le type de tile
 	 */
 	MapTile(TileType type=TileType::DEFAULT);
+	/*! \brief mutateur de m_collidable
+	 *  \param c nouvelle valeur de m_collidable
+	 */
 	void setCollidable(bool c);
+	/*! \brief mutateur de m_breakable
+	 *  \param b nouvelle valeur de m_breakable
+	 */
 	void setBreakable(bool b);
+	/*! \brief accesseur de m_collidable
+	 *  \return m_collidable
+	 */
 	bool isCollidable();
+	/*! \brief accesseur de m_breakable
+	 *  \return m_breakable
+	 */
 	bool isBreakable();
 };
 

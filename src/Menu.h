@@ -6,33 +6,33 @@
 #include "Game.h"
 #include "Button.h"
 
-/*! \brief Controller that manages the main menu
+/*! \brief contrôleur qui gère le menu principal
  */
 class Menu: public Controller
 {
 private:
 
-	/*! \brief called during the event management
+	/*! \brief appelé durant la boucle principale
 	 *
-	 *  It will verify which button the mouse is hovering, and will execute the Button actions if needed.
+	 * La gestion des évènements du menu comprend la vérification du clic.
 	 */
 	void manageEvents();
-	Button *playButton; //!< the play button
-	Button *quitButton; //!< the quit button
-	sf::Sprite background; //!< background image
-	sf::Sprite logo; //!< game logo
+	Button *playButton; //!< bouton Jouer
+	Button *quitButton; //!< bouton quitter
+	sf::Sprite background; //!< image d'arrière plan
+	sf::Sprite logo; //!< logo du jeu
 	
 public:
 
-	/*! \brief default constructor
+	/*! \brief crée un contrôleur de menu
 	 *  \see Controller::Controller(GameWindow *window)
 	 */
 	Menu(GameWindow* window);
-	/*! \brief destructor
+	/*! \brief met fin au contrôleur du menu
 	 *  \see Controller::~Controller()
 	 */
 	virtual ~Menu();
-	/*! \brief main method that manages the lifecycle of the Controller
+	/*! \brief méthode principale qui gère la vie du menu
 	 *  \see void Controller::start()
 	 */
 	void start();

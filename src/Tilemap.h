@@ -5,52 +5,60 @@
 #include "TileSystem.h"
 #include "IDrawable.h"
 
-/*! \brief a Tilemap is a grid of Tiles
+/*! \brief une carte est une grille de tuiles qui peut être dessinée 
  */
 class Tilemap: public IDrawable
 {
 private:
 
-	vector<vector<unsigned int>> m_map; //!<  map of indexes (0 means no Tile, any other positive integer is the index of a Tile in m_tilesys)
-	vector<vector<int>> m_metadata; //!< metadata
-	int m_width; //!< actual width of the m_map
-	int m_height; //!< actual height of the m_map
+	vector<vector<unsigned int>> m_map; //!< carte d'indices (0 est un indice spécial signifiant pas de tuile, n'importe quel autre entier naturel doit correspondre à un indice de tuile dans m_tilesys)
+	vector<vector<int>> m_metadata; //!< meta-données de chaque tuile (doit faire la même taille que m_map)
+	int m_width; //!< largeur de m_map
+	int m_height; //!< hauteur de m_map
 
 public:
 
-	/*! \brief default constructor
-	 *  \param tilesys pointer to the TileSystem that will be used by the Tilemap
-	 *  \param width initial width of the Tilemap
-	 *  \param height initial height of the Tilemap
+	/*! \brief crée une carte vide avec une largeur et une hauteur définies
+	 *  \param tilesys TileSystem utilisé par la carte
+	 *  \param width largeur initiale de la carte
+	 *  \param height hauteur initiale de la carte
 	 */
 	Tilemap(TileSystem *tilesys, int width, int height);
-	/*! \brief replaces the m_map with a new map
+	/*! \brief mutateur de m_map
 	 *
-	 *  This method won't insert lines larger than m_width, and will ommit the last lines if their count overflows m_height
-	 *  \param map the new map
+	 *  Cette méthode n'insérera pas de lignes plus larges que m_width, et ommettra les dernières lignes si leur nombre dépasse m_height.
+	 *  \param map nouvelle valeur de m_map
 	 */
 	void setMap(const vector<vector<unsigned int>> &map);
-	/*! \brief getter of m_width
+	/*! \brief accesseur de m_width
 	 *  \return m_width
 	 */
 	int getWidth();
-	/*! \brief getter of m_height
+	/*! \brief accesseur de m_height
 	 *  \return m_height
 	 */
 	int getHeight();
-	/*! \brief get the first sf::Sprite of the Tile at given coordinates
-	 *  \param i x value
-	 *  \param j y value
-	 */
 	sf::Vector2i toTileCoord(sf::Vector2f c);
+	/*! \brief récupère le premier sprite de la tuile aux coordonnées données
+	 *  \param i abscisse
+	 *  \param j ordonnée
+	 */
 	sf::Sprite *getSprite(int i, int j);
-	/*! \brief get the sf::Sprite of the Tile of given index, at given coordinates
-	 *  \param index index of the sf::Sprite to get
-	 *  \param i x value
-	 *  \param j y value
+	/*! \brief récupère le sprite d'indice donnée de la tuile aux coordonnées données
+	 *  \param index indice du sprite
+	 *  \param i abscisse
+	 *  \param j ordonnée
 	 */
 	sf::Sprite *getSprite(unsigned int index, int i, int j);
+	/*! \brief récupère la tuile aux coordonnées données
+	 *  \param i abscisse
+	 *  \param j ordonnée
+	 */
 	Tile *getTile(unsigned int i, unsigned int j);
+	/*! \brief récupère les méta-données aux coordonnées données
+	 *  \param i abscisse
+	 *  \param j ordonnée
+	 */
 	int getMetadata(unsigned int i, unsigned int j);
 	void draw(GameWindow*);
 };

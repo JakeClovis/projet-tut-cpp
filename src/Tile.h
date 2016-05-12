@@ -3,54 +3,62 @@
 
 #include "Globals.h"
 
-/*! \brief the Tile is an elementary block of a tilemapped game
+/*! \brief un tuile est une brique élémentaire de tout bon jeu 2D de base
  */
 class Tile
 {
 protected:	
 	
-	vector<sf::Sprite*> m_sprites; //!< sf::Sprite of the Tile (a Tile can be multisprite or monosprite)
-	TileType m_type;
+	vector<sf::Sprite*> m_sprites; //!< le ou les sprite(s) de la tuile (une tuile peut-être mono ou multi-sprite)
+	TileType m_type; //!< le type de tuile
 
 
 public:
 
-	/*! \brief default constructor that initializes a Tile with a single sf::Sprite
+	/*! \brief crée une tuile avec un premier sprite
 	 *
-	 *  It shouldn't be called directly. Instead it should be called via T *Tileset::createTile(int i, int j)
-	 *  \param s the sf::Sprite that will be added
+	 *  Une tuile ne devrait pas être créée directement. Au lieu de ça il faut idéalement utiliser T *Tileset::createTile(int i, int j).
+	 *  \param s le sprite à ajouter
 	 */
 	Tile(sf::Sprite &s, TileType type=TileType::DEFAULT);
-	/*! \brief empty constructor that initializes a Tile with no sf::Sprite in it
+	/*! \brief crée une tuile sans aucun sprite
 	 *
-	 *  It shouldn't be called directly. Instead it should be called via T *Tileset::createTile(vector<int> i, vector<int> j)
+	 *  Une tuile ne devrait pas être créée directement. Au lieu de ça il faut idéalement utiliser T *Tileset::createTile(vector<int> i, vector<int> j).
 	 */
 	Tile(TileType type=TileType::DEFAULT);
-	/*! \brief destructor
+	/*! \brief détruit la tuile
 	 *
-	 *  It will deallocates the vector of sf::Sprite, so be VERY careful, don't forget that when you add a sf::Sprite to a Tile, it should be only used in this Tile!
+	 * 	Il désallouera tout le tableau de sprites, soyez donc EXTRÊMEMENT prudent, n'oubliez pas que quand vous ajoutez un sprite à une tuile, il doit être utilisé uniquement dans cette tuile !
 	 */
 	virtual ~Tile();
-	/*! \brief adds a new sf::Sprite to the Tile
-	 *  \param s the sf::Sprite that will be added
+	/*! \brief ajoute un nouveau sprite à la tuile
+	 *  \param s le sprite qui sera ajouté
 	 */
 	void addSprite(sf::Sprite &s);
-	/*! \brief gets the first (or a random one if m_type is RANDOMIZED) sf::Sprite of the vector of sf::Sprite at the given coordinates (useful for a monosprite Tile)
+	/*! \brief récupère le premier sprite du tableau de sprites aux coordonnées données (utile pour les tuiles mono-sprite)
 	 *
-	 *  Attention please: the given coordinates depends of the original sf::Sprite. As this method returns a pointer, calling it twice with different coordinates will make the first call pointless. Don't forget that if you get unexpected results, for instance the same sf::Sprite drawn a trouzillion times at the same place!
-	 *  \param x the x coordinate where the sf::Sprite will be drawn
-	 *  \param y the y coordinate where the sf::Sprite will be drawn
+	 *  Attention : les coordonnées dépendent du sprite référencé par le pointeur retourné. De ce fait, appeler deux fois de suite cette méthode avec différentes coordonnées rendra le premier appel inutile. N'oubliez pas ceci si vous obtenez des résultats inattendus, par exemple si vous dessinez le même sprite un trouzillion de fois au même endroit !
+	 *  \param x abscisse où le sprite sera dessiné
+	 *  \param y ordonnée où le sprite sera dessiné
+	 *  \return le sprite à dessiner
 	 */
 	sf::Sprite *getSprite(float x, float y); 
-	/*! \brief gets the sf::Sprite of the vector of sf::Sprite in the given index, at the given coordinates (useful for a multisprite Tile)
+	/*! \brief récupère le sprite d'indice donné du tableau de sprites aux coordonnées données (utile pour les tuiles multi-sprite)
 	 *
-	 *  Attention please: the given coordinates depends of the original sf::Sprite. As this method returns a pointer, calling it twice with different coordinates will make the first call pointless. Don't forget that if you get unexpected results, for instance the same sf::Sprite drawn a trouzillion times at the same place!
-	 *  \param index index of the sf::Sprite to get
-	 *  \param x the x coordinate where the sf::Sprite will be drawn
-	 *  \param y the y coordinate where the sf::Sprite will be drawn
+	 *  Attention : les coordonnées dépendent du sprite référencé par le pointeur retourné. De ce fait, appeler deux fois de suite cette méthode avec différentes coordonnées rendra le premier appel inutile. N'oubliez pas ceci si vous obtenez des résultats inattendus, par exemple si vous dessinez le même sprite un trouzillion de fois au même endroit !
+	 *  \param index l'indice du sprite à récupérer
+	 *  \param x abscisse où le sprite sera dessiné
+	 *  \param y ordonnée où le sprite sera dessiné
+	 *  \return le sprite à dessiner
 	 */
 	sf::Sprite *getSprite(unsigned int index, float x, float y);
+	/*! \brief accesseur de m_type
+	 *  \return m_type
+	 */
 	TileType getType();
+	/*! \brief retourne le nombre de sprites dans la tuile
+	 *  \return taille de m_sprites
+	 */
 	int getSpriteCount();
 };
 
