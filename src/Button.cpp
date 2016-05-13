@@ -41,3 +41,16 @@ void Button::draw(GameWindow *window)
 	m_text.setPosition(left+((((i*m_tilesys->getTs()->getDisplayWidth())+m_tilesys->getTs()->getDisplayWidth())-textBox.width)/2), top + height/2 - textBox.height/2);
 	window->draw(m_text);
 }
+
+void Button::manageEvents(sf::Event &event, void *args)
+{
+	switch(event.type)
+	{
+		case sf::Event::MouseButtonPressed:
+			if(contains(event.mouseButton.x, event.mouseButton.y))
+				callback(args);
+			break;
+		default:
+			break;
+	}
+}

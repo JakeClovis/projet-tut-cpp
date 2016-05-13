@@ -2,6 +2,7 @@
 #define _BOMBERMAN_GAME_WINDOW_H_
 
 #include "Globals.h"
+#include "IHandlable.h"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ using namespace std;
  *
  *  Une vue est la partie affichage du modèle MVC. Elle présente à l'écran tout ce que l'utilisateur doit voir.
  */
-class GameWindow : public sf::RenderWindow
+class GameWindow : public sf::RenderWindow, public IHandlable
 {
 private:
 
@@ -46,10 +47,7 @@ public:
 	/*! \brief rectifie le ratio à m_width:m_height
 	 */
 	void rectifyRatio();
-	/*! \brief gestion d'évènements
-	 *  \param event l'évènement à utiliser
-	 */
-	void manageEvents(sf::Event &event);
+	void manageEvents(sf::Event &event, void *args=NULL);
 };
 
 #endif //_BOMBERMAN_GAME_WINDOW_H_

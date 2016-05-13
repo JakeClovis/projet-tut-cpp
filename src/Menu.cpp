@@ -18,16 +18,17 @@ Menu::Menu(GameWindow *window): Controller(window)
 
 	playButton = new Button(m_tilesystems["button"], 0, 2*m_window->getSize().y/3, "Nouvelle partie", m_fonts["default"],
 		[](void *arg) -> void {
-				GameWindow *w = (GameWindow*)arg;
-				Game *g = new Game(w);
+				vector<void*>* v = (vector<void*>*) arg;
+				Game *g = new Game((GameWindow*) (*v)[1]);
+				((sf::Music*)(*v)[0])->stop();
 				g->start();
 				delete g;
+				((sf::Music*)(*v)[0])->play();
 		});
 	playButton->left = m_window->getSize().x/2 - playButton->width/2; 
 	quitButton = new Button(m_tilesystems["button"], 0, +2*m_window->getSize().y/3+3*m_tilesystems["button"]->getTs()->getDisplayHeight()/2, "Quitter", m_fonts["default"],
 		[](void *arg) -> void {
-				GameWindow *w = (GameWindow*)arg;
-				w->close();
+				((GameWindow*)arg)->close();
 		});
 	quitButton->left = m_window->getSize().x/2 - quitButton->width/2; 
 
@@ -53,22 +54,11 @@ void Menu::manageEvents()
 	sf::Event event;
 	while(m_window->pollEvent(event))
 	{
-		switch(event.type)
-		{
-			case sf::Event::MouseButtonPressed:
-				if(playButton->contains(event.mouseButton.x, event.mouseButton.y))
-				{
-					m_musics["title"]->stop();
-					playButton->callback((void*)m_window);
-					m_musics["title"]->play();
-				}
-				else if(quitButton->contains(event.mouseButton.x, event.mouseButton.y))
-					quitButton->callback((void*)m_window);
-				break;
-			default:
-				break;
-		}
 		m_window->manageEvents(event);
+
+		vector<void*> v = {(void*)m_musics["title"], (void*)m_window};
+		playButton->manageEvents(event, (void*)(&v));
+		quitButton->manageEvents(event, (void*)m_window);
 	}
 }
 

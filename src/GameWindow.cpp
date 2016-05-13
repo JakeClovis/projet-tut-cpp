@@ -45,7 +45,7 @@ void GameWindow::rectifyRatio()
 	}
 }
 
-void GameWindow::manageEvents(sf::Event &event)
+void GameWindow::manageEvents(sf::Event &event, void *args)
 {
 	switch(event.type)
 	{

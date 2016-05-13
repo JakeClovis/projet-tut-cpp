@@ -67,6 +67,8 @@ void Game::manageEvents()
 			default:
 				break;
 		}
+
+		//TMP
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			m_player2->setSpeed(sf::Vector2f(0, -SPEED_FACTOR*m_window->getTileSize()));
 		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -88,7 +90,7 @@ void Game::manageEvents()
 			m_player1->setSpeed(sf::Vector2f(SPEED_FACTOR*m_window->getTileSize(), 0));
 		else
 			m_player1->setSpeed(sf::Vector2f(0, 0));
-
+		//ENDOF TMP
 
 		m_window->manageEvents(event);
 	}

@@ -3,11 +3,12 @@
 
 #include "Globals.h"
 #include "IDrawable.h"
+#include "IHandlable.h"
 #include <SFML/Graphics/Rect.hpp>
 
 /*! \brief gestion de boutons cliquables
  */
-class Button: public sf::IntRect, public IDrawable
+class Button: public sf::IntRect, public IDrawable, public IHandlable
 {
 protected:
 
@@ -31,6 +32,7 @@ public:
 	 */
 	void callback(void* args);
 	void draw(GameWindow*);
+	void manageEvents(sf::Event &event, void *args=NULL);
 	
 };
 
