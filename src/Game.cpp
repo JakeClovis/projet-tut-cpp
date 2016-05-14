@@ -18,18 +18,29 @@ Game::Game(GameWindow* window): Controller(window)
 	m_tilesystems["player"]->registerTile(Orientation::BOTTOM, {1, 2, 3}, {3, 3, 3});
 	m_tilesystems["player"]->registerTile(Orientation::LEFT, {1, 2, 3}, {4, 4, 4});
 
-	m_player1 = new LivingEntity(m_tilesystems["player"], {
+	m_player1 = new Player(m_tilesystems["player"], {
 					{Orientation::TOP, sf::IntRect(12, 21, 9, 8)},
 					{Orientation::RIGHT, sf::IntRect(12, 21, 11, 8)},
 					{Orientation::BOTTOM, sf::IntRect(12, 21, 9, 8)},
 					{Orientation::LEFT, sf::IntRect(10, 21, 11, 8)}
-					}, sf::Vector2f(16, 24), sf::Vector2f(1.5*m_window->getTileSize(), 1.5*m_window->getTileSize()), 1);
-	m_player2 = new LivingEntity(m_tilesystems["player"], {
+					}, sf::Vector2f(16, 24), sf::Vector2f(1.5*m_window->getTileSize(), 1.5*m_window->getTileSize()), 1, {
+					sf::Keyboard::Z,
+					sf::Keyboard::D,
+					sf::Keyboard::S,
+					sf::Keyboard::Q,
+					sf::Keyboard::A});
+	m_player2 = new Player(m_tilesystems["player"], {
 					{Orientation::TOP, sf::IntRect(12, 21, 9, 8)},
 					{Orientation::RIGHT, sf::IntRect(12, 21, 11, 8)},
 					{Orientation::BOTTOM, sf::IntRect(12, 21, 9, 8)},
 					{Orientation::LEFT, sf::IntRect(10, 21, 11, 8)}
-					}, sf::Vector2f(16, 24), sf::Vector2f(13.5*m_window->getTileSize(), 1.5*m_window->getTileSize()), 1);
+					}, sf::Vector2f(16, 24), sf::Vector2f(13.5*m_window->getTileSize(), 1.5*m_window->getTileSize()), 1, {
+					sf::Keyboard::Up,
+					sf::Keyboard::Right,
+					sf::Keyboard::Down,
+					sf::Keyboard::Left,
+					sf::Keyboard::RControl});
+
 
 
 	m_view.reset(sf::FloatRect(0, 0, m_window->getSize().x - 2*m_window->getTileSize(), m_window->getSize().y - 2*m_window->getTileSize()));
@@ -68,30 +79,9 @@ void Game::manageEvents()
 				break;
 		}
 
-		//TMP
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			m_player2->setSpeed(sf::Vector2f(0, -SPEED_FACTOR*m_window->getTileSize()));
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			m_player2->setSpeed(sf::Vector2f(0, SPEED_FACTOR*m_window->getTileSize()));
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			m_player2->setSpeed(sf::Vector2f(-SPEED_FACTOR*m_window->getTileSize(), 0));
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			m_player2->setSpeed(sf::Vector2f(SPEED_FACTOR*m_window->getTileSize(), 0));
-		else
-			m_player2->setSpeed(sf::Vector2f(0, 0));
-
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-			m_player1->setSpeed(sf::Vector2f(0, -SPEED_FACTOR*m_window->getTileSize()));
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			m_player1->setSpeed(sf::Vector2f(0, SPEED_FACTOR*m_window->getTileSize()));
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-			m_player1->setSpeed(sf::Vector2f(-SPEED_FACTOR*m_window->getTileSize(), 0));
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			m_player1->setSpeed(sf::Vector2f(SPEED_FACTOR*m_window->getTileSize(), 0));
-		else
-			m_player1->setSpeed(sf::Vector2f(0, 0));
-		//ENDOF TMP
-
+		m_player1->manageEvents(event, (void*)m_window);
+		m_player2->manageEvents(event, (void*)m_window);	
+		
 		m_window->manageEvents(event);
 	}
 }

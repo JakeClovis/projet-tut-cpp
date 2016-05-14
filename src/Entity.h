@@ -20,7 +20,7 @@ protected:
 	int m_maxHealth; //!< la santé maximale d'un tick
 	sf::Vector2f m_position; //!< position de l'entité
 	sf::Vector2f m_center; //!< centre d'affichage de l'entité par rapport au coin supérieur gauche du Tile
-	map<Orientation, sf::IntRect> m_bBoxes; //!< boite de collision de chaque orientation
+	map<Orientation, sf::IntRect> m_bBoxes; //!< boite de collision de chaque orientation (il n'y en a qu'une si l'entité n'est pas vivante)
 
 public:
 

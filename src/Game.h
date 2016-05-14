@@ -7,7 +7,7 @@
 #include "Tilemap.h"
 #include "MapTile.h"
 #include "Controller.h"
-#include "LivingEntity.h"
+#include "Player.h"
 
 /*! \brief contrôleur de partie
  */
@@ -18,8 +18,8 @@ private:
 	sf::View m_view; //!< conteneur du contexte de jeu
 	sf::Clock m_timer; //!< permet la gestion du temps écoulé entre deux itérations de la boucle de jeu
 	bool m_isPlaying; //!< permet de vérifier si la partie est en cours
-	LivingEntity *m_player1, //!< le joueur 1
-				 *m_player2; //!< le joueur 2
+	Player *m_player1, //!< le joueur 1
+		   *m_player2; //!< le joueur 2
 	/*! \brief appelé durant la boucle de jeu
 	 *
 	 * La gestion des évènements du jeu comprend les entrées utilisateur, la demande de mise en pause, etc.
