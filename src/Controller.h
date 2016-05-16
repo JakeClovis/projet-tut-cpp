@@ -45,6 +45,9 @@ public:
 	 *  Cette méthode doit contenir la boucle d'évènements. Ainsi, cette méthode ne se termine que quand le moment est venu de cesser ses activités (par exemple lorsque l'on ferme la vue qu'il gère, ou lorsque la partie se termine...).
 	 */
 	virtual void start() = 0;
+	/*! \brief indique au controlleur qu'un changement d'état d'un de ses composants nécessite de rafraîchir d'autres composants
+	 */
+	virtual void notifyUpdate() = 0;
 };
 
 #endif //_BOMBERMAN_CONTROLLER_H_

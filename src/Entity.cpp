@@ -8,3 +8,8 @@ Entity::Entity(TileSystem *tilesys, map<Orientation, sf::IntRect> bBoxes, sf::Ve
 Entity::~Entity()
 {
 }
+
+int Entity::getHealth()
+{
+	return m_health;
+}

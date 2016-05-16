@@ -40,6 +40,10 @@ void TileSystem::registerTile<MapTile>(unsigned int index, vector<int> i, vector
 
 Tile *TileSystem::getTile(unsigned int index)
 {
+	if(index == 0) //index vide
+	{
+		return NULL;
+	}
 	map<unsigned int, Tile*>::iterator element;
 	element = m_tilesList.find(index);
 	if(element != m_tilesList.end())

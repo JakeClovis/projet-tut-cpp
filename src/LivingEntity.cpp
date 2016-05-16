@@ -59,7 +59,7 @@ void LivingEntity::move(sf::Vector2f potential, Tilemap *world)
 	}
 }
 
-void LivingEntity::updateState(sf::Time &elapsed, Tilemap *world)
+void LivingEntity::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world)
 {
 	Orientation n_orientation = m_orientation;
 	sf::Vector2f potential;
@@ -81,10 +81,10 @@ void LivingEntity::updateState(sf::Time &elapsed, Tilemap *world)
 
 	if(m_speed.x == 0 && m_speed.y == 0)
 		m_tick = 0;
-	else if (m_watcher.getElapsedTime().asSeconds() > 0.5/SPEED_FACTOR)
+	else if (m_watcher.getElapsedTime().asSeconds() > 0.75/SPEED_FACTOR)
 	{
 		m_watcher.restart();
-		m_tick = m_tick==1?2:1;
+		m_tick = m_tick==1?2:1; //TODO généraliser pour x frames
 	}
 
 	potential.x = elapsed.asSeconds()*m_speed.x;

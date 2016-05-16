@@ -24,6 +24,7 @@ public:
 	 *  \param height hauteur initiale de la carte
 	 */
 	Tilemap(TileSystem *tilesys, int width, int height);
+	virtual ~Tilemap();
 	/*! \brief mutateur de m_map
 	 *
 	 *  Cette méthode n'insérera pas de lignes plus larges que m_width, et ommettra les dernières lignes si leur nombre dépasse m_height.
@@ -60,6 +61,10 @@ public:
 	 *  \param j ordonnée
 	 */
 	int getMetadata(unsigned int i, unsigned int j);
+	/*! \brief accesseur de m_tilesys
+	 *  \return m_tilesys
+	 */
+	TileSystem *getTileSystem();
 	void draw(GameWindow*);
 };
 

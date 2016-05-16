@@ -5,6 +5,7 @@
 #include "IDrawable.h"
 #include "TileSystem.h"
 #include "Tilemap.h"
+#include "Controller.h"
 
 /*! \brief Base abstraite des entités du jeu
  *  
@@ -15,6 +16,7 @@ class Entity: public IDrawable
 protected:
 
 	sf::Clock m_watcher; //!< cette horloge permet de gérer la mise à jour du tick
+	sf::Clock m_timeAlive; //!< temps depuis lequel l'entité est spawnée
 	int m_tick;	//!< valeur particulière qui permet de gérer un état générique de l'entité (son animation par exemple)
 	int m_health; //!< la santé d'une entité peut avoir de multiples utilités : typiquement une vie <=0 signifie que l'entité est morte, et nécessite un traitement particulier
 	int m_maxHealth; //!< la santé maximale d'un tick
@@ -35,11 +37,16 @@ public:
 	Entity(TileSystem *tilesys, map<Orientation, sf::IntRect> bBoxes, sf::Vector2f center, sf::Vector2f position, int health);
 	virtual ~Entity();
 	/*! \brief met à jour l'état de l'entité en fonction du temps écoulé
-	 *  
+	 * 
+	 *  \param controller contrôleur à notifier si besoin
 	 *  \param elapsed temps écoulé
 	 *  \param world le monde dans lequel évolue l'entité
 	 */
-	virtual void updateState(sf::Time &elapsed, Tilemap *world) = 0;
+	virtual void updateState(Controller *controller, sf::Time &elapsed, Tilemap *world) = 0;
+	/*! \brief accesseur de m_health
+	 *  \return m_health
+	 */
+	int getHealth();
 };
 
 #endif //_BOMBERMAN_ENTITY_H_

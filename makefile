@@ -15,7 +15,8 @@ SRCS=src/main.cpp\
 	 src/MapTile.cpp\
 	 src/Entity.cpp\
 	 src/LivingEntity.cpp\
-	 src/Player.cpp
+	 src/Player.cpp\
+	 src/Bomb.cpp
 OBJ=$(subst src/,output/, $(subst .cpp,.o, $(SRCS)))
 
 all: bomberman

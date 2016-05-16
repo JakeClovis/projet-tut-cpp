@@ -80,3 +80,7 @@ void Menu::start()
 		m_window->display();
 	}
 }
+
+void Menu::notifyUpdate()
+{
+}

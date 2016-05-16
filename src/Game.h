@@ -20,6 +20,8 @@ private:
 	bool m_isPlaying; //!< permet de vérifier si la partie est en cours
 	Player *m_player1, //!< le joueur 1
 		   *m_player2; //!< le joueur 2
+	Tilemap *m_physicalMap; //!< plateau de jeu
+	vector<Entity*> m_entities; //!< entités non joueur présentes sur le plateau
 	/*! \brief appelé durant la boucle de jeu
 	 *
 	 * La gestion des évènements du jeu comprend les entrées utilisateur, la demande de mise en pause, etc.
@@ -40,6 +42,7 @@ public:
 	 *  \see void Controller::start()
 	 */
 	void start();
+	void notifyUpdate();
 };
 
 #endif //_BOMBERMAN_GAME_H_

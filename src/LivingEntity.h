@@ -28,7 +28,7 @@ public:
 	 *  \param speed nouvelle valeur de m_speed
 	 */
 	void setSpeed(sf::Vector2f speed);
-	void updateState(sf::Time &elapsed, Tilemap *world);
+	void updateState(Controller *controller, sf::Time &elapsed, Tilemap *world);
 	void draw(GameWindow* window);
 };
 

@@ -36,6 +36,7 @@ public:
 	 *  \see void Controller::start()
 	 */
 	void start();
+	void notifyUpdate();
 };
 
 #endif //_BOMBERMAN_MENU_H_

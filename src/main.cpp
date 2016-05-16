@@ -73,9 +73,9 @@ int main(int argc, char *argv[])
 
 
 	if(tileSize > 0)
-		window.create(tileSize, 17, 13);
+		window.create(tileSize, 17, 14);
 	else
-		window.create(17, 13);
+		window.create(17, 14);
 
 	mainController = new Menu(&window);
 	mainController->start();

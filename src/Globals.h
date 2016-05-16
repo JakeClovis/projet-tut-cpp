@@ -25,7 +25,7 @@
 
 /*! \brief différents types de Tile
  */
-enum TileType { DEFAULT=1, RANDOMIZED=2 };
+enum TileType { DEFAULT=1, RANDOMIZED=2, ANIMATED=3 };
 /*! \brief orientations des entités vivantes
  */
 enum Orientation { TOP=1, RIGHT=2, BOTTOM=3, LEFT=4 };

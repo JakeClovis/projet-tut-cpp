@@ -5,6 +5,10 @@ Tilemap::Tilemap(TileSystem *tilesys, int width, int height): IDrawable(tilesys)
 	cout << "** Creating the Tilemap " << this << " using the TileSystem " << tilesys << endl;
 }
 
+Tilemap::~Tilemap()
+{
+}
+
 void Tilemap::setMap(const vector<vector<unsigned int>> &map)
 {
 	cout << "** Setting up a new map for the Tilemap " << this << endl;
@@ -103,4 +107,9 @@ void Tilemap::draw(GameWindow *w)
 			if(toDraw != NULL) 
 				w->draw(*toDraw);
 		}
+}
+
+TileSystem *Tilemap::getTileSystem()
+{
+	return m_tilesys;
 }
