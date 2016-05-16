@@ -8,10 +8,17 @@ Game::Game(GameWindow* window): Controller(window)
 	
 	ResourceAllocator::allocateTileset(m_tilesets, "level", new Tileset(m_textures["level"], 10, 6, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
 	ResourceAllocator::allocateTileset(m_tilesets, "player", new Tileset(m_textures["player"], 4, 3, 32, 32, m_window->getTileSize()*2, m_window->getTileSize()*2));
-	ResourceAllocator::allocateTileset(m_tilesets, "bomb", new Tileset(m_textures["bomb"], 1, 4, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
+	ResourceAllocator::allocateTileset(m_tilesets, "bomb", new Tileset(m_textures["bomb"], 8, 4, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
 
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "bomb", m_tilesets["bomb"]);
 	m_tilesystems["bomb"]->registerTile<MapTile>(1, {1, 2, 3, 4}, {1, 1, 1, 1}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(2, {1, 2, 3, 4}, {2, 2, 2, 2}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(3, {1, 2, 3, 4}, {3, 3, 3, 3}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(4, {1, 2, 3, 4}, {4, 4, 4, 4}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(5, {1, 2, 3, 4}, {5, 5, 5, 5}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(6, {1, 2, 3, 4}, {6, 6, 6, 6}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(7, {1, 2, 3, 4}, {7, 7, 7, 7}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile<MapTile>(8, {1, 2, 3, 4}, {8, 8, 8, 8}, TileType::ANIMATED, false, false);
 
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "level",  m_tilesets["level"]);
 	m_tilesystems["level"]->registerTile<MapTile>(1, {1, 2, 3}, {1, 1, 1}, TileType::RANDOMIZED, false, false); //Herbe
@@ -200,17 +207,17 @@ void Game::notifyUpdate()
 
 	while(i<m_entities.size() && notFound)
 	{
-		if(m_entities[i]->getHealth()==0)
+		if(m_entities[i]->getHealth()==-1)
 		{
 			if(Bomb* b = dynamic_cast<Bomb*>(m_entities[i]))
 			{
 				b->getPlayer()->notifyExplosion();
 				delete m_entities[i];
 				notFound = false;
+				m_entities.erase(m_entities.begin()+i);
 			}
 		}
 		else
 			i++;
 	}
-	m_entities.erase(m_entities.begin()+i);
 }

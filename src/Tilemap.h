@@ -57,6 +57,8 @@ public:
 	 */
 	Tile *getTile(unsigned int i, unsigned int j);
 	/*! \brief récupère les méta-données aux coordonnées données
+	 *
+	 * 	Une tentative de récupération d'un Tile hors carte cause un comportement indéfini.
 	 *  \param i abscisse
 	 *  \param j ordonnée
 	 */

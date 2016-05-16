@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(TileSystem *tilesys, map<Orientation, sf::IntRect> bBoxes, sf::Vector2f center, sf::Vector2f position, int health, vector<sf::Keyboard::Key> controls, TileSystem *bombTilesys): LivingEntity(tilesys, bBoxes, center, position, health), m_blastPower(1), m_bombCount(1), m_bombInventory(1), m_bombHasBeenDropped(false), m_bombTilesys(bombTilesys)
+Player::Player(TileSystem *tilesys, map<Orientation, sf::IntRect> bBoxes, sf::Vector2f center, sf::Vector2f position, int health, vector<sf::Keyboard::Key> controls, TileSystem *bombTilesys): LivingEntity(tilesys, bBoxes, center, position, health), m_blastPower(2), m_bombCount(1), m_bombInventory(1), m_bombHasBeenDropped(false), m_bombTilesys(bombTilesys)
 , m_controls(controls){
 }
 
@@ -41,11 +41,10 @@ void Player::manageEvents(sf::Event &event, void *args)
 
 void Player::dropBomb(sf::Vector2f pos, vector<Entity*> *list)
 {
-	list->push_back((Entity*)new Bomb(m_bombTilesys, {0, 0}, pos, 4, this, sf::seconds(2)));
+	list->push_back((Entity*)new Bomb(m_bombTilesys, {0, 0}, pos, 4, this, sf::seconds(SPEED_FACTOR*(1/(float)9)), m_blastPower));
 }
 
 void Player::notifyExplosion()
 {
 	if(m_bombInventory < m_bombCount) m_bombInventory++;
-	cout << "ok merci" << endl;
 }

@@ -77,7 +77,7 @@ Tile *Tilemap::getTile(unsigned int i, unsigned int j)
 	}
 	else
 	{
-		return NULL;
+		return m_tilesys->getTile(1);
 	}
 }
 
