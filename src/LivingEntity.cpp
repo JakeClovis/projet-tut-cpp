@@ -61,36 +61,39 @@ void LivingEntity::move(sf::Vector2f potential, Tilemap *world)
 
 void LivingEntity::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world)
 {
-	Orientation n_orientation = m_orientation;
-	sf::Vector2f potential;
-
-	if(m_speed.y < 0)
-		n_orientation = Orientation::TOP;
-	else if(m_speed.y > 0)
-		n_orientation = Orientation::BOTTOM;
-	else if(m_speed.x > 0)
-		n_orientation = Orientation::RIGHT;
-	else if(m_speed.x < 0)
-		n_orientation = Orientation::LEFT;
-
-	if(m_orientation != n_orientation)
+	if(m_health>0)
 	{
-		m_orientation = n_orientation;
-		m_watcher.restart();
+		Orientation n_orientation = m_orientation;
+		sf::Vector2f potential;
+
+		if(m_speed.y < 0)
+			n_orientation = Orientation::TOP;
+		else if(m_speed.y > 0)
+			n_orientation = Orientation::BOTTOM;
+		else if(m_speed.x > 0)
+			n_orientation = Orientation::RIGHT;
+		else if(m_speed.x < 0)
+			n_orientation = Orientation::LEFT;
+
+		if(m_orientation != n_orientation)
+		{
+			m_orientation = n_orientation;
+			m_watcher.restart();
+		}
+	
+		if(m_speed.x == 0 && m_speed.y == 0)
+			m_tick = 0;
+		else if (m_watcher.getElapsedTime().asSeconds() > 0.75/SPEED_FACTOR)
+		{
+			m_watcher.restart();
+			m_tick = m_tick==1?2:1; //TODO généraliser pour x frames
+		}
+	
+		potential.x = elapsed.asSeconds()*m_speed.x;
+		potential.y = elapsed.asSeconds()*m_speed.y;
+	
+		if((potential.x != 0) or (potential.y != 0)) move(potential, world);
 	}
-
-	if(m_speed.x == 0 && m_speed.y == 0)
-		m_tick = 0;
-	else if (m_watcher.getElapsedTime().asSeconds() > 0.75/SPEED_FACTOR)
-	{
-		m_watcher.restart();
-		m_tick = m_tick==1?2:1; //TODO généraliser pour x frames
-	}
-
-	potential.x = elapsed.asSeconds()*m_speed.x;
-	potential.y = elapsed.asSeconds()*m_speed.y;
-
-	if((potential.x != 0) or (potential.y != 0)) move(potential, world);
 }
 	
 void LivingEntity::draw(GameWindow* window)

@@ -9,6 +9,8 @@
 #include "Controller.h"
 #include "Player.h"
 
+class Player;
+
 /*! \brief contrôleur de partie
  */
 class Game: public Controller
@@ -43,6 +45,15 @@ public:
 	 */
 	void start();
 	void notifyUpdate();
+	/*! \brief accesseur de m_entities
+	 *  \return m_entities
+	 */
+	vector<Entity*> *getEntities();
+	/*! \brief récupère le joueur d'indice donné
+	 *  \param i indice du joueur
+	 *  \return joueur i
+	 */
+	Player *getPlayer(int i);
 };
 
 #endif //_BOMBERMAN_GAME_H_

@@ -27,11 +27,23 @@ void Player::manageEvents(sf::Event &event, void *args)
 	{
 		if(m_bombInventory > 0)
 		{
-			m_bombInventory--;
 			sf::Vector2i logicalPosToDrop = tm->toTileCoord(m_position);
 			sf::Vector2f posToDrop = {(float) (tm->getTileSystem()->getTs()->getDisplayWidth()*logicalPosToDrop.x), (float) (tm->getTileSystem()->getTs()->getDisplayHeight()*logicalPosToDrop.y)};
+			bool canDrop = true;
+			for(unsigned int i = 0 ; i < l->size() ; i++)
+			{
+				if((*l)[i]->getPosition() == posToDrop)
+				{
+					canDrop = false;
+					break;
+				}
+			}
 
-			dropBomb(posToDrop, l);
+			if(canDrop)
+			{
+				m_bombInventory--;
+				dropBomb(posToDrop, l);
+			}
 			m_bombHasBeenDropped = true;
 		}
 	}
@@ -47,4 +59,34 @@ void Player::dropBomb(sf::Vector2f pos, vector<Entity*> *list)
 void Player::notifyExplosion()
 {
 	if(m_bombInventory < m_bombCount) m_bombInventory++;
+}
+
+void Player::hit()
+{
+	if(m_health>0) m_health--;
+}
+
+bool Player::isOnCoord(unsigned int i, unsigned int j, Tilemap *world)
+{
+	float offsetX = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_center.x;
+	float offsetY = (m_tilesys->getTs()->getDisplayHeight()/(float)m_tilesys->getTs()->getHeight())*m_center.y;
+	float displayLeft = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_bBoxes[m_orientation].left;
+	float displayTop = (m_tilesys->getTs()->getDisplayHeight()/(float)m_tilesys->getTs()->getHeight())*m_bBoxes[m_orientation].top;
+	float displayWidth = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_bBoxes[m_orientation].width;
+	float displayHeight = (m_tilesys->getTs()->getDisplayHeight()/(float)m_tilesys->getTs()->getHeight())*m_bBoxes[m_orientation].height;
+
+	sf::Vector2i topMin = world->toTileCoord(sf::Vector2f(m_position.x-offsetX+displayLeft, m_position.y-offsetY+displayTop));
+	sf::Vector2i bottomMax = world->toTileCoord(sf::Vector2f(m_position.x-offsetX+displayLeft+displayWidth, m_position.y-offsetY+displayTop+displayHeight));
+	
+	for(unsigned int it = topMin.x ; it <= (unsigned int) bottomMax.x ; it++)
+	{
+		for(unsigned int jt = topMin.y ; jt <= (unsigned int) bottomMax.y ; jt++)
+		{
+			if((it==i)&&(jt==j))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }

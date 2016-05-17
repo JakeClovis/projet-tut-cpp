@@ -73,7 +73,7 @@ Tile *Tilemap::getTile(unsigned int i, unsigned int j)
 {
 	if(i<(unsigned int) m_width && j<(unsigned int) m_height)
 	{
-		return m_map[j][i]!=0?(m_tilesys->getTile(m_map[j][i])):NULL;
+		return m_map[j][i]!=0?(m_tilesys->getTile(m_map[j][i])):m_tilesys->getTile(1);
 	}
 	else
 	{
@@ -127,8 +127,14 @@ void Tilemap::attemptDestruction(unsigned int i, unsigned int j)
 {
 	if(i<(unsigned int) m_width && j<(unsigned int) m_height)
 	{
+		if(m_map[j][i]!=0)
 		if(((MapTile*)getTile(i, j))->isBreakable())
-			setTileIndex(m_map[j][i]+1, i, j, 0);
+		{
+			if(m_tilesys->getTile(m_map[j][i]+1)->getType() == TileType::TRANSITIONAL)
+				setTileIndex(m_map[j][i]+1, i, j, 0);
+			else
+				setTileIndex(1, i, j, -1);
+		}
 	}
 }
 

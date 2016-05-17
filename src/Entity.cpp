@@ -13,3 +13,8 @@ int Entity::getHealth()
 {
 	return m_health;
 }
+
+sf::Vector2f Entity::getPosition()
+{
+	return m_position;
+}

@@ -47,6 +47,10 @@ public:
 	 *  \return m_health
 	 */
 	int getHealth();
+	/*! \brief accesseur de m_position
+	 *  \return m_position
+	 */
+	sf::Vector2f getPosition();
 };
 
 #endif //_BOMBERMAN_ENTITY_H_

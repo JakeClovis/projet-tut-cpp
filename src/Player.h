@@ -37,6 +37,15 @@ public:
 	/*! \brief doit être appelé par la bombe d'un joueur quand elle explose, pour notifier ce dernier qu'elle a explosée
 	 */
 	void notifyExplosion();
+	/*! \brief fait prendre un point de dégat au joueur
+	 */
+	void hit();
+	/*! \brief vérifie si le joueur touche la coordonnée donnée
+	 *  \param i abscisse
+	 *  \param j ordonnée
+	 *  \return vrai si le joueur touche
+	 */
+	bool isOnCoord(unsigned int i, unsigned int j, Tilemap *world);
 
 };
 

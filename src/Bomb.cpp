@@ -83,6 +83,37 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 				m_tick = m_tilesys->getTile(2)->getSpriteCount()-2;
 			}
 		}
+		
+		if(Game *g = dynamic_cast<Game*>(controller))
+		{
+			sf::Vector2i logicalPos = world->toTileCoord(m_position);
+			for(int i = 1 ; i <= 2 ; i++)
+			{
+				Player *p = g->getPlayer(i);
+				bool hasBeenHit = false;
+
+				if(p->isOnCoord(logicalPos.x, logicalPos.y, world))
+				{
+					p->hit();
+					hasBeenHit = true;
+				}
+				if(!hasBeenHit)
+				{
+					for(unsigned int j = 1 ; j <= m_blastRadius ; j++)
+					{
+						if(p->isOnCoord(logicalPos.x, logicalPos.y-j, world) ||
+						   p->isOnCoord(logicalPos.x, logicalPos.y+j, world) ||
+						   p->isOnCoord(logicalPos.x-j, logicalPos.y, world) ||
+						   p->isOnCoord(logicalPos.x+j, logicalPos.y, world))
+						{
+							hasBeenHit = true;
+							p->hit();
+							break;
+						}
+					}
+				}
+			}
+		}
 
 		if(m_timeAlive.getElapsedTime().asSeconds() >= SPEED_FACTOR*0.24)
 			m_health--;

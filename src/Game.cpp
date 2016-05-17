@@ -222,3 +222,16 @@ void Game::notifyUpdate()
 			i++;
 	}
 }
+
+vector<Entity*> *Game::getEntities()
+{
+	return &m_entities;
+}
+
+Player *Game::getPlayer(int i)
+{
+	if(i == 1)
+		return m_player1;
+	else
+		return m_player2;
+}
