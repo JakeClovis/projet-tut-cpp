@@ -30,33 +30,44 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 				for(int i = 0 ; i < 4 ; i++) m_maxSize[i] = 0;
 				sf::Vector2i logicalPos = world->toTileCoord(m_position);
 				bool hit[] = {false, false, false, false};
-				cout << logicalPos.x << ":" << logicalPos.y << endl;
 				for(unsigned int i = 1 ; i <= m_blastRadius ; i++)
 				{
 					if(!((MapTile*)world->getTile(logicalPos.x, logicalPos.y-i))->isCollidable() && !hit[0])
 					{
 						m_maxSize[0]++;
 					}
-					else
+					else if(!hit[0])
+					{
 						hit[0] = true;
+							world->attemptDestruction(logicalPos.x, logicalPos.y-i);
+					}
 					if(!((MapTile*)world->getTile(logicalPos.x, logicalPos.y+i))->isCollidable() && !hit[2])
 					{
 						m_maxSize[2]++;
 					}
-					else
+					else if(!hit[2])
+					{
 						hit[2] = true;
+							world->attemptDestruction(logicalPos.x, logicalPos.y+i);
+					}
 					if(!((MapTile*)world->getTile(logicalPos.x+i, logicalPos.y))->isCollidable() && !hit[1])
 					{
 						m_maxSize[1]++;
 					}
-					else
+					else if(!hit[1])
+					{
 						hit[1] = true;
+							world->attemptDestruction(logicalPos.x+i, logicalPos.y);
+					}
 					if(!((MapTile*)world->getTile(logicalPos.x-i, logicalPos.y))->isCollidable() && !hit[3])
 					{
 						m_maxSize[3]++;
 					}
-					else
+					else if(!hit[3])
+					{
 						hit[3] = true;
+							world->attemptDestruction(logicalPos.x-i, logicalPos.y);
+					}
 				}
 			}
 		}
@@ -73,7 +84,7 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 			}
 		}
 
-		if(m_timeAlive.getElapsedTime().asSeconds() >= SPEED_FACTOR*0.17)
+		if(m_timeAlive.getElapsedTime().asSeconds() >= SPEED_FACTOR*0.24)
 			m_health--;
 	}	
 	else

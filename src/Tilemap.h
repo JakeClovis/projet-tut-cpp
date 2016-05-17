@@ -11,6 +11,7 @@ class Tilemap: public IDrawable
 {
 private:
 
+	sf::Clock m_watcher; //!< contrôle des Tile animés
 	vector<vector<unsigned int>> m_map; //!< carte d'indices (0 est un indice spécial signifiant pas de tuile, n'importe quel autre entier naturel doit correspondre à un indice de tuile dans m_tilesys)
 	vector<vector<int>> m_metadata; //!< meta-données de chaque tuile (doit faire la même taille que m_map)
 	int m_width; //!< largeur de m_map
@@ -56,6 +57,18 @@ public:
 	 *  \param j ordonnée
 	 */
 	Tile *getTile(unsigned int i, unsigned int j);
+	/*! \brief modifie l'index du Tile aux coordonnées données
+	 *  \param index nouvel index
+	 *  \param i abscisse
+	 *  \param j ordonnée
+	 *  \param metadata méta-données
+	 */
+	void setTileIndex(unsigned int index, unsigned int i, unsigned int j, int metadata=-1);
+	/*! \brief tente la destruction d'un tile (si destructible, modifie son index en l'id suivant)
+	 *  \param i abscisse
+	 *  \param j ordonnée
+	 */ 
+	void attemptDestruction(unsigned int i, unsigned int j);
 	/*! \brief récupère les méta-données aux coordonnées données
 	 *
 	 * 	Une tentative de récupération d'un Tile hors carte cause un comportement indéfini.
@@ -67,6 +80,11 @@ public:
 	 *  \return m_tilesys
 	 */
 	TileSystem *getTileSystem();
+	/*! \brief met à jour la carte selon le temps écoulé
+	 *  \param controller contrôleur appelant
+	 *  \param elapsed temps écoulé
+	 */
+	virtual void updateState(sf::Time &elapsed);
 	void draw(GameWindow*);
 };
 

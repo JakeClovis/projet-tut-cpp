@@ -41,7 +41,7 @@ void Player::manageEvents(sf::Event &event, void *args)
 
 void Player::dropBomb(sf::Vector2f pos, vector<Entity*> *list)
 {
-	list->push_back((Entity*)new Bomb(m_bombTilesys, {0, 0}, pos, 4, this, sf::seconds(SPEED_FACTOR*(1/(float)9)), m_blastPower));
+	list->push_back((Entity*)new Bomb(m_bombTilesys, {0, 0}, pos, 4, this, sf::seconds(SPEED_FACTOR*(1/(float)7)), m_blastPower));
 }
 
 void Player::notifyExplosion()

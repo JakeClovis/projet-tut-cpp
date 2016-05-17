@@ -11,19 +11,19 @@ Game::Game(GameWindow* window): Controller(window)
 	ResourceAllocator::allocateTileset(m_tilesets, "bomb", new Tileset(m_textures["bomb"], 8, 4, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
 
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "bomb", m_tilesets["bomb"]);
-	m_tilesystems["bomb"]->registerTile<MapTile>(1, {1, 2, 3, 4}, {1, 1, 1, 1}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(2, {1, 2, 3, 4}, {2, 2, 2, 2}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(3, {1, 2, 3, 4}, {3, 3, 3, 3}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(4, {1, 2, 3, 4}, {4, 4, 4, 4}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(5, {1, 2, 3, 4}, {5, 5, 5, 5}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(6, {1, 2, 3, 4}, {6, 6, 6, 6}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(7, {1, 2, 3, 4}, {7, 7, 7, 7}, TileType::ANIMATED, false, false);
-	m_tilesystems["bomb"]->registerTile<MapTile>(8, {1, 2, 3, 4}, {8, 8, 8, 8}, TileType::ANIMATED, false, false);
+	m_tilesystems["bomb"]->registerTile(1, {1, 2, 3, 4}, {1, 1, 1, 1});
+	m_tilesystems["bomb"]->registerTile(2, {1, 2, 3, 4}, {2, 2, 2, 2});
+	m_tilesystems["bomb"]->registerTile(3, {1, 2, 3, 4}, {3, 3, 3, 3});
+	m_tilesystems["bomb"]->registerTile(4, {1, 2, 3, 4}, {4, 4, 4, 4});
+	m_tilesystems["bomb"]->registerTile(5, {1, 2, 3, 4}, {5, 5, 5, 5});
+	m_tilesystems["bomb"]->registerTile(6, {1, 2, 3, 4}, {6, 6, 6, 6});
+	m_tilesystems["bomb"]->registerTile(7, {1, 2, 3, 4}, {7, 7, 7, 7});
+	m_tilesystems["bomb"]->registerTile(8, {1, 2, 3, 4}, {8, 8, 8, 8});
 
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "level",  m_tilesets["level"]);
 	m_tilesystems["level"]->registerTile<MapTile>(1, {1, 2, 3}, {1, 1, 1}, TileType::RANDOMIZED, false, false); //Herbe
 	m_tilesystems["level"]->registerTile<MapTile>(2, {1, 2, 3, 4}, {3, 3, 3, 3}, TileType::RANDOMIZED, true, true); //pierres destructibles
-	m_tilesystems["level"]->registerTile<MapTile>(3, {1, 2, 3, 4, 5, 6}, {2, 2, 2, 2, 2, 2}, TileType::ANIMATED, true, true); //animation de destruction
+	m_tilesystems["level"]->registerTile<MapTile>(3, {1, 2, 3, 4, 5, 6}, {2, 2, 2, 2, 2, 2}, TileType::TRANSITIONAL, true, true); //animation de destruction
 	m_tilesystems["level"]->registerTile<MapTile>(4, 5, 3, TileType::DEFAULT, true, false); //pierres indestructibles
 	m_tilesystems["level"]->registerTile<MapTile>(5, 1, 4, TileType::DEFAULT, true, false); //bordure herbeuse supérieure
 	m_tilesystems["level"]->registerTile<MapTile>(6, 2, 4, TileType::DEFAULT, true, false); //bordure herbeuse supérieure coin gauche
@@ -172,7 +172,8 @@ void Game::start()
 	{
 		sf::Time elapsedTime = m_timer.restart();
 		manageEvents();
-		
+	
+		m_physicalMap->updateState(elapsedTime);	
 		m_player1->updateState(this, elapsedTime, m_physicalMap);
 		m_player2->updateState(this, elapsedTime, m_physicalMap);
 		for(unsigned int i = 0 ; i < m_entities.size() ; i++)

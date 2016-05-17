@@ -113,3 +113,40 @@ TileSystem *Tilemap::getTileSystem()
 {
 	return m_tilesys;
 }
+
+void Tilemap::setTileIndex(unsigned int index, unsigned int i, unsigned int j, int metadata)
+{
+	if(i<(unsigned int) m_width && j<(unsigned int) m_height)
+	{
+		m_map[j][i] = index;
+		m_metadata[j][i] = metadata;
+	}
+}
+
+void Tilemap::attemptDestruction(unsigned int i, unsigned int j)
+{
+	if(i<(unsigned int) m_width && j<(unsigned int) m_height)
+	{
+		if(((MapTile*)getTile(i, j))->isBreakable())
+			setTileIndex(m_map[j][i]+1, i, j, 0);
+	}
+}
+
+void Tilemap::updateState(sf::Time &elapsed)
+{
+	if(m_watcher.getElapsedTime().asSeconds()>SPEED_FACTOR*0.01)
+	{
+		m_watcher.restart();
+		for(int i = 0 ; i < m_width ; i++)
+			for(int j = 0 ; j < m_height ; j++)
+			{
+				if(m_map[j][i] != 0)
+				if(getTile(i, j)->getType() == TileType::TRANSITIONAL)
+				{
+					m_metadata[j][i]++;
+					if(m_metadata[j][i] > getTile(i, j)->getSpriteCount()-1)
+						setTileIndex(1, i, j);
+				}
+			}
+	}	
+}
