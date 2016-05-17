@@ -101,10 +101,10 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 				{
 					for(unsigned int j = 1 ; j <= m_blastRadius ; j++)
 					{
-						if(p->isOnCoord(logicalPos.x, logicalPos.y-j, world) ||
-						   p->isOnCoord(logicalPos.x, logicalPos.y+j, world) ||
-						   p->isOnCoord(logicalPos.x-j, logicalPos.y, world) ||
-						   p->isOnCoord(logicalPos.x+j, logicalPos.y, world))
+						if((p->isOnCoord(logicalPos.x, logicalPos.y-j, world) && j <= m_maxSize[0]) ||
+						   (p->isOnCoord(logicalPos.x, logicalPos.y+j, world) && j <= m_maxSize[2]) ||
+						   (p->isOnCoord(logicalPos.x-j, logicalPos.y, world) && j <= m_maxSize[3]) ||
+						   (p->isOnCoord(logicalPos.x+j, logicalPos.y, world) && j <= m_maxSize[1]))
 						{
 							hasBeenHit = true;
 							p->hit();
