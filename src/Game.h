@@ -23,6 +23,7 @@ private:
 	Player *m_player1, //!< le joueur 1
 		   *m_player2; //!< le joueur 2
 	Tilemap *m_physicalMap; //!< plateau de jeu
+	Tilemap *m_backgroundMap; //!< arrière plan de jeu
 	vector<Entity*> m_entities; //!< entités non joueur présentes sur le plateau
 	/*! \brief appelé durant la boucle de jeu
 	 *

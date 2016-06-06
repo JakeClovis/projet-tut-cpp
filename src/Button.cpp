@@ -4,6 +4,7 @@ Button::Button(TileSystem *tilesys, int x, int y, string text, sf::Font *font, v
 {
 	int i;
 
+	//on définit le texte du bouton
 	m_text.setString(text);
 	m_text.setFont(*font);
 	m_text.setCharacterSize(m_tilesys->getTs()->getDisplayWidth()/3);
@@ -11,6 +12,7 @@ Button::Button(TileSystem *tilesys, int x, int y, string text, sf::Font *font, v
 	
 	sf::FloatRect textBox = m_text.getGlobalBounds();
 	
+	//on calcule la largeur du bouton en fonction du texte
 	for(i = 1 ; i*m_tilesys->getTs()->getDisplayWidth() < textBox.width ; i++);
 	width = (1+i)*m_tilesys->getTs()->getDisplayWidth();
 	height = m_tilesys->getTs()->getDisplayHeight();
@@ -22,13 +24,13 @@ Button::~Button()
 
 void Button::callback(void* args)
 {
-	if(m_callback != NULL) (*m_callback)(args);
+	if(m_callback != NULL) (*m_callback)(args); //on appelle le callback s'il existe
 }
 
 void Button::draw(GameWindow *window)
 {
 	sf::Vector2i mouseLocation = sf::Mouse::getPosition(*window);
-	int tileIndexToDraw = (contains(mouseLocation)?1:2);
+	int tileIndexToDraw = (contains(mouseLocation)?1:2); //permet de savoir quel tile afficher selon que la souris est sur le bouton ou pas
 	sf::FloatRect textBox = m_text.getGlobalBounds();
 	int i;
 
@@ -46,7 +48,7 @@ void Button::manageEvents(sf::Event &event, void *args)
 {
 	switch(event.type)
 	{
-		case sf::Event::MouseButtonPressed:
+		case sf::Event::MouseButtonPressed: //appelle le callback en cas de clic
 			if(contains(event.mouseButton.x, event.mouseButton.y))
 				callback(args);
 			break;

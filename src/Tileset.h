@@ -52,7 +52,6 @@ public:
 								m_height));
 		newSprite->setScale((float)m_displayWidth/(float)m_width,
 						(float)m_displayHeight/(float)m_height);
-		cout << "test" << endl;
 		return new T(*newSprite, ty);
 	}
 	

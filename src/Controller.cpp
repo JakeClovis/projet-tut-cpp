@@ -7,6 +7,7 @@ Controller::Controller(GameWindow *window): m_window(window)
 
 Controller::~Controller()
 {
+	//On désalloue un par un les registres de ressources
 	for (map<string, sf::Texture*>::iterator element=m_textures.begin() ; element != m_textures.end() ; element++)
 	{
 		cout << " * Deallocating the texture " << element->second << endl;

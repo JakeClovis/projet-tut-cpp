@@ -1,20 +1,20 @@
 #include "Globals.h"
 #include "Menu.h"
 
-/*! \brief a structure that describes a null stream buffer (quite the equivalent of /dev/null on *nix systems)
+/*! \brief une structure qui décrit un stream buffer nul (équivalent en C++ du /dev/null sur les systèmes *nix)
  */
 struct nStream: public std::streambuf
 {
-	/*! \brief overflow function, won't do anything because it's a null buffer
-	 *  \param c nevermind, it's not important
+	/*! \brief fonction d'overflow, ne fait rien car on a un tampon nul
+	 *  \param c Regarde-moi dans les yeux. Regarde-moi. On s’en branle, c’est pas important !
 	 */
 	void overflow(char c)
 	{
 	}
 };
 
-/*! \brief prints the help on the standard output
- *  \param name corresponds to argv[0]
+/*! \brief affiche l'aide sur la sortie standard
+ *  \param nom de la commande
  */
 void displayHelp(const char *name)
 {
@@ -26,34 +26,34 @@ void displayHelp(const char *name)
 			" -s SIZE\tChange the tile size (default: " << DEFAULT_TILE_SIZE << ")" << endl;
 }
 
-/*! \brief main file, reads the command line and launches the game
- *  \param argc arguments count (o rly?)
- *  \param argv arguments from the command line (O, RLY???)
+/*! \brief Fonction principale, lit les arguments de la ligne de commande et lance le jeu
+ *  \param argc nombre d'arguments (rly?)
+ *  \param argv les arguments de la ligne de commande (O, RLY???)
  */
 int main(int argc, char *argv[])
 {
 	nStream nullStream;
-	Menu *mainController = NULL; // the game instance
-	GameWindow window; // main window
+	Menu *mainController = NULL; // l'instance de jeu
+	GameWindow window; // fenêtre principale
 	streambuf *coutBackup = cout.rdbuf(&nullStream);
 	int options, tileSize = 0;
 
 	srand(time(NULL));
 
-	if(DEBUG_MODE) //Forces the verbose mode (for debugging purposes)
+	if(DEBUG_MODE) //force le mode verbeux (pour le mode debug)
 		cout.rdbuf(coutBackup);
 
 	while((options = getopt(argc, argv, "hvs:")) != -1)
 		switch(options)
 		{
-		case 'h': //help
+		case 'h': //aide
 			cout.rdbuf(coutBackup);
 			displayHelp(argv[0]);
 			exit(0);
-		case 'v': //verbose mode
+		case 'v': //mode verbeux
 			cout.rdbuf(coutBackup);
 			break;
-		case 's': //custom tile size
+		case 's': //taille de tuile personnalisée
 				tileSize = atoi(optarg);
 				if(tileSize <= 0)
 				{
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 					exit(GENERIC_ERROR);
 				}
 			break;
-		default: //invalid option
+		default: //option invalide
 			cout.rdbuf(coutBackup);
 			cerr << "Try " << argv[0] << " -h for help." << endl;
 			exit(GENERIC_ERROR);
@@ -82,6 +82,6 @@ int main(int argc, char *argv[])
 
 	delete mainController;
 
-	cout.rdbuf(coutBackup); //don't forget to restore standard output in order to avoid segmentation fault
+	cout.rdbuf(coutBackup); //on n'oublie pas de restaurer la sortie standard par défaut pour éviter les segmentation fault
 	return 0;
 }

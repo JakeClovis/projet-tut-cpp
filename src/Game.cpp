@@ -2,14 +2,18 @@
 
 Game::Game(GameWindow* window): Controller(window)
 {
-	ResourceAllocator::allocateTexture(m_textures, "player", "res/textures/player.png");
-	ResourceAllocator::allocateTexture(m_textures, "level", "res/textures/level.png");
-	ResourceAllocator::allocateTexture(m_textures, "bomb", "res/textures/bomb.png");
+	ResourceAllocator::allocateTexture(m_textures, "player", "res/textures/player.png"); //texture du joueur
+	ResourceAllocator::allocateTexture(m_textures, "level", "res/textures/level.png"); //texture du niveau
+	ResourceAllocator::allocateTexture(m_textures, "bomb", "res/textures/bomb.png"); //texture de la bombe
+	ResourceAllocator::allocateTexture(m_textures, "background", "res/textures/background.png"); //texture d'arrière plan
 	
+	//On définit les paramètres des Tileset d'après les textures chargées en mémoire
 	ResourceAllocator::allocateTileset(m_tilesets, "level", new Tileset(m_textures["level"], 10, 6, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
 	ResourceAllocator::allocateTileset(m_tilesets, "player", new Tileset(m_textures["player"], 4, 3, 32, 32, m_window->getTileSize()*2, m_window->getTileSize()*2));
 	ResourceAllocator::allocateTileset(m_tilesets, "bomb", new Tileset(m_textures["bomb"], 8, 4, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
+	ResourceAllocator::allocateTileset(m_tilesets, "background", new Tileset(m_textures["background"], 6, 12, 16, 16, m_window->getTileSize(), m_window->getTileSize()));
 
+	//On enregistre le TileSystem de la bombe, avec un tile pour la bombe, 1 pour le centre de l'explosion, 4 pour les extrêmités de branche d'explosion, et 2 pour les branches
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "bomb", m_tilesets["bomb"]);
 	m_tilesystems["bomb"]->registerTile(1, {1, 2, 3, 4}, {1, 1, 1, 1});
 	m_tilesystems["bomb"]->registerTile(2, {1, 2, 3, 4}, {2, 2, 2, 2});
@@ -20,6 +24,7 @@ Game::Game(GameWindow* window): Controller(window)
 	m_tilesystems["bomb"]->registerTile(7, {1, 2, 3, 4}, {7, 7, 7, 7});
 	m_tilesystems["bomb"]->registerTile(8, {1, 2, 3, 4}, {8, 8, 8, 8});
 
+	//On enregistre le TileSystem du niveau, avec toutes les tuiles correspondantes
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "level",  m_tilesets["level"]);
 	m_tilesystems["level"]->registerTile<MapTile>(1, {1, 2, 3}, {1, 1, 1}, TileType::RANDOMIZED, false, false); //Herbe
 	m_tilesystems["level"]->registerTile<MapTile>(2, {1, 2, 3, 4}, {3, 3, 3, 3}, TileType::RANDOMIZED, true, true); //pierres destructibles
@@ -68,13 +73,22 @@ Game::Game(GameWindow* window): Controller(window)
 	m_tilesystems["level"]->registerTile<MapTile>(45, 4, 8, TileType::DEFAULT, true, false); //limite inférieur gauche
 	m_tilesystems["level"]->registerTile<MapTile>(46, 5, 8, TileType::DEFAULT, true, false); //limite inférieur centre
 	m_tilesystems["level"]->registerTile<MapTile>(47, 6, 8, TileType::DEFAULT, true, false); //limite inférieur droite
-	
+
+	//Le TileSystem de l'arrière plan, juste un ensemble de tuiles de décoration
+	ResourceAllocator::allocateTileSystem(m_tilesystems, "background", m_tilesets["background"]);
+	//On va allouer l'intégralité des Tuiles. Il y aura plusieurs tuiles vides, mais ce n'est pas grave.
+	for(int i = 1 ; i <= m_tilesystems["background"]->getTs()->getRows() ; i++)
+		for(int j = 1 ; j <= m_tilesystems["background"]->getTs()->getCols() ; j++)
+			m_tilesystems["background"]->registerTile((i-1)*m_tilesystems["background"]->getTs()->getCols()+j, j, i);
+
+	//Le TileSystem du joueur comporte un Tile par orientation	
 	ResourceAllocator::allocateTileSystem(m_tilesystems, "player", m_tilesets["player"]);
 	m_tilesystems["player"]->registerTile(Orientation::TOP, {1, 2, 3}, {1, 1, 1}); //haut
 	m_tilesystems["player"]->registerTile(Orientation::RIGHT, {1, 2, 3}, {2, 2, 2}); //droite
 	m_tilesystems["player"]->registerTile(Orientation::BOTTOM, {1, 2, 3}, {3, 3, 3}); //bas
 	m_tilesystems["player"]->registerTile(Orientation::LEFT, {1, 2, 3}, {4, 4, 4}); //gauche
-
+	
+	//On crée 2 joueurs avec leurs touches
 	m_player1 = new Player(m_tilesystems["player"], {
 					{Orientation::TOP, sf::IntRect(12, 21, 9, 8)},
 					{Orientation::RIGHT, sf::IntRect(12, 21, 11, 8)},
@@ -97,7 +111,8 @@ Game::Game(GameWindow* window): Controller(window)
 					sf::Keyboard::Down,
 					sf::Keyboard::Left,
 					sf::Keyboard::RControl}, m_tilesystems["bomb"]);
-
+	
+	//On crée la carte 
 	m_physicalMap = new Tilemap(m_tilesystems["level"], m_window->getWidth(), m_window->getHeight()-1);
 	m_physicalMap->setMap({
 					{41, 42, 5, 5, 5, 5, 5, 6, 0, 7, 5, 5, 5, 5, 5, 44, 43},
@@ -115,6 +130,25 @@ Game::Game(GameWindow* window): Controller(window)
 					{38, 45, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 47, 40},
 					});
 
+	//Arrière plan
+	m_backgroundMap = new Tilemap(m_tilesystems["background"], m_window->getWidth(), m_window->getHeight()-1);
+	m_backgroundMap->setMap({
+					{4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 5, 4, 4, 4, 4, 4, 4},
+					{17, 17, 17, 18, 19, 20, 21, 22, 23, 24, 18, 17, 17, 17, 17, 17, 17},
+					{28, 28, 29, 30, 31, 32, 33, 34, 35, 36, 28, 28, 28, 28, 28, 28, 28},
+					{1, 1, 1, 1, 1, 1, 1, 49, 50, 51, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 61, 62, 63, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 50, 51, 52, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+					});
+
+	//On définit la vue de jeu
 	m_view.reset(sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y - 1*m_window->getTileSize()));
 	m_view.setViewport(sf::FloatRect(
 							0, 
@@ -140,7 +174,7 @@ void Game::manageEvents()
 	{
 		switch(event.type)
 		{
-			case sf::Event::KeyPressed:
+			case sf::Event::KeyPressed: //Si on a cliqué sur echap, on met le jeu en pause
 				switch(event.key.code)
 				{
 					case sf::Keyboard::Escape:
@@ -153,50 +187,58 @@ void Game::manageEvents()
 			default:
 				break;
 		}
-		
+	
+		//On gère les évènements des deux joueurs	
 		vector<void*> v = {(void*)m_window, (void*)m_physicalMap, (void*)&m_entities};
 		m_player1->manageEvents(event, (void*)&v);
 		m_player2->manageEvents(event, (void*)&v);
 		
+		//On gère les évènements spécifiques de la fenêtre
 		m_window->manageEvents(event);
 	}
 }
 
 void Game::start()
 {
+	//on démarre le jeu
 	srand(time(NULL));
 	m_isPlaying = true;
 	m_timer.restart();	
 
-	while(m_isPlaying && m_window->isOpen())
+	while(m_isPlaying && m_window->isOpen()) //tant que la fenêtre reste ouverte et qu'on a pas quitté le jeu via le menu pause, on continue à jouer
 	{
-		sf::Time elapsedTime = m_timer.restart();
-		manageEvents();
+		sf::Time elapsedTime = m_timer.restart(); //on récupère le temps écoulé
+		manageEvents(); //gestion des évènements utilisateur
 	
+		//On met à jour l'état de la carte et de toutes les entités sur la carte
 		m_physicalMap->updateState(elapsedTime);	
 		m_player1->updateState(this, elapsedTime, m_physicalMap);
 		m_player2->updateState(this, elapsedTime, m_physicalMap);
 		for(unsigned int i = 0 ; i < m_entities.size() ; i++)
 			m_entities[i]->updateState(this, elapsedTime, m_physicalMap);
 	
+		//On efface l'affichage
 		m_window->clear(sf::Color(100, 100, 100));
 		
+		//On se place dans la vue de jeu
 		m_window->setView(m_view);
 
-		//TMP CODE TESTING PURPOSES
+		//On affiche la carte
+		m_backgroundMap->draw(m_window);
 		m_physicalMap->draw(m_window);
 		
+		//Puis on dessine les entités
 		for(unsigned int i = 0 ; i < m_entities.size() ; i++)
 			m_entities[i]->draw(m_window);
 
+		//...Ainsi que les deux joueurs
 		m_player1->draw(m_window);
 		m_player2->draw(m_window);
-
-		m_window->setView(m_window->getDefaultView());
-		//END
 	
+		//On se repositionne dans la vue principale	
 		m_window->setView(m_window->getDefaultView());
 
+		//On raffraichit l'affichage
 		m_window->display();
 	}
 }
@@ -205,17 +247,19 @@ void Game::notifyUpdate()
 {
 	unsigned int i = 0;
 	bool notFound = true;
-
+	
+	//notifyUpdate() ne traite qu'une notification par appel
 	while(i<m_entities.size() && notFound)
 	{
+		//Si l'entité est une bombe et qu'elle fini d'exploser
 		if(m_entities[i]->getHealth()==-1)
 		{
 			if(Bomb* b = dynamic_cast<Bomb*>(m_entities[i]))
 			{
-				b->getPlayer()->notifyExplosion();
-				delete m_entities[i];
+				b->getPlayer()->notifyExplosion(); //on notifie le joueur de l'explosion
+				delete m_entities[i]; //on supprime la bombe
 				notFound = false;
-				m_entities.erase(m_entities.begin()+i);
+				m_entities.erase(m_entities.begin()+i); //on supprime l'entrée dans le vector
 			}
 		}
 		else

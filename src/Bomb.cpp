@@ -6,10 +6,10 @@ Bomb::Bomb(TileSystem *tilesys, sf::Vector2f center, sf::Vector2f position, int 
 
 void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world)
 {
-	if(m_health > 0)
+	if(m_health > 0) //si la bombe n'a pas encore explosé
 	{
-		float timeBetweenFrames = -(m_timeAlive.getElapsedTime().asSeconds()-m_maxHealth*m_duration.asSeconds())/30;
-		if(m_watcher.getElapsedTime().asSeconds() > ((m_tick==0)?timeBetweenFrames*SPEED_FACTOR:SPEED_FACTOR*0.017))
+		float timeBetweenFrames = -(m_timeAlive.getElapsedTime().asSeconds()-m_maxHealth*m_duration.asSeconds())/30; //plus on approche de l'explosion, plus la bombe clignote vite
+		if(m_watcher.getElapsedTime().asSeconds() > ((m_tick==0)?timeBetweenFrames*SPEED_FACTOR:SPEED_FACTOR*0.017)) //mise à jour du tick d'animation
 		{
 			m_watcher.restart();
 			m_tick++;
@@ -19,17 +19,20 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 			}
 		}
 	
-		if(m_timeAlive.getElapsedTime().asSeconds() >= (m_maxHealth-m_health+1)*m_duration.asSeconds())
+		if(m_timeAlive.getElapsedTime().asSeconds() >= (m_maxHealth-m_health+1)*m_duration.asSeconds()) //si on dépasse le temps minimal requis pour perdre une vie
 		{
-			m_health--;
-			if(m_health==0)
+			m_health--; 
+			if(m_health==0) //si la bombe est sur le point d'exploser
 			{
 				m_timeAlive.restart();
 				m_watcher.restart();
 				m_tick = 0;
+
 				for(int i = 0 ; i < 4 ; i++) m_maxSize[i] = 0;
 				sf::Vector2i logicalPos = world->toTileCoord(m_position);
 				bool hit[] = {false, false, false, false};
+
+				//on définit la propagation maximale du rayon de l'explosion en fonction de l'environnement dans chaque direction, et on essaye de détruire le bloc touché
 				for(unsigned int i = 1 ; i <= m_blastRadius ; i++)
 				{
 					if(!((MapTile*)world->getTile(logicalPos.x, logicalPos.y-i))->isCollidable() && !hit[0])
@@ -72,9 +75,9 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 			}
 		}
 	}
-	else if(m_health == 0)
+	else if(m_health == 0) //sinon si la bombe est en train d'exploser
 	{
-		if(m_watcher.getElapsedTime().asSeconds() > SPEED_FACTOR*0.005)
+		if(m_watcher.getElapsedTime().asSeconds() > SPEED_FACTOR*0.005) //rafraichissement du tick d'animation de l'explosion
 		{
 			m_watcher.restart();
 			m_tick++;
@@ -84,7 +87,7 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 			}
 		}
 		
-		if(Game *g = dynamic_cast<Game*>(controller))
+		if(Game *g = dynamic_cast<Game*>(controller)) //test de collision avec les entités et joueurs sur la carte
 		{
 			sf::Vector2i logicalPos = world->toTileCoord(m_position);
 			for(int i = 1 ; i <= 2 ; i++)
@@ -92,14 +95,14 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 				Player *p = g->getPlayer(i);
 				bool hasBeenHit = false;
 
-				if(p->isOnCoord(logicalPos.x, logicalPos.y, world))
+				if(p->isOnCoord(logicalPos.x, logicalPos.y, world)) //collision avec le point central de l'explosion
 				{
 					p->hit();
 					hasBeenHit = true;
 				}
 				if(!hasBeenHit)
 				{
-					for(unsigned int j = 1 ; j <= m_blastRadius ; j++)
+					for(unsigned int j = 1 ; j <= m_blastRadius ; j++) //collisions avec les bras de l'explosion
 					{
 						if((p->isOnCoord(logicalPos.x, logicalPos.y-j, world) && j <= m_maxSize[0]) ||
 						   (p->isOnCoord(logicalPos.x, logicalPos.y+j, world) && j <= m_maxSize[2]) ||
@@ -115,10 +118,10 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 			}
 		}
 
-		if(m_timeAlive.getElapsedTime().asSeconds() >= SPEED_FACTOR*0.24)
+		if(m_timeAlive.getElapsedTime().asSeconds() >= SPEED_FACTOR*0.24) //si l'explosion est terminée, alors on baisse encore la vie à -1
 			m_health--;
 	}	
-	else
+	else //si la bombe a fini d'exploser, on notifie le contrôleur de cette fin d'explosion
 	{
 		controller->notifyUpdate();
 	}
@@ -126,13 +129,14 @@ void Bomb::updateState(Controller *controller, sf::Time &elapsed, Tilemap *world
 
 void Bomb::draw(GameWindow *window)
 {
-	float offsetX = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_center.x;
+	float offsetX = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_center.x; //on calcule l'offset pour l'affichage
 	float offsetY = (m_tilesys->getTs()->getDisplayHeight()/(float)m_tilesys->getTs()->getHeight())*m_center.y;
-	window->draw(*(m_tilesys->getTile(m_health>0?1:2)->getSprite(m_tick, m_position.x-offsetX, m_position.y-offsetY)));
+
+	window->draw(*(m_tilesys->getTile(m_health>0?1:2)->getSprite(m_tick, m_position.x-offsetX, m_position.y-offsetY))); //on dessine le bon sprite en fonction de si la bombe a explosé ou pas
 	
-	if(m_health==0)
+	if(m_health==0) //si l'explosion est en cours
 	{
-		for(unsigned int i = 1 ; i <= m_blastRadius ; i++)
+		for(unsigned int i = 1 ; i <= m_blastRadius ; i++) //on affiche chaque rayon jusqu'à la bonne distance
 		{
 			if(i<=m_maxSize[0])
 				window->draw(*(m_tilesys->getTile((i==m_blastRadius)?3:7)->getSprite(m_tick, m_position.x-offsetX, m_position.y-offsetY-i*m_tilesys->getTs()->getDisplayHeight())));
