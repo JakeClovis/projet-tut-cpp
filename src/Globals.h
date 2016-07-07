@@ -8,7 +8,7 @@
 #include <ctime>
 
 #define DEFAULT_TILE_SIZE 50 //default tile size
-#define DEBUG_MODE true //true will force the -v parameter
+#define DEBUG_MODE false //true will force the -v parameter
 #define G_VERSION "dev" //version
 #define G_AUTHORS "Guillaume JORANDON & Clément SIMON" //authors
 

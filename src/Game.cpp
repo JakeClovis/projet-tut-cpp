@@ -189,10 +189,14 @@ void Game::manageEvents()
 		}
 	
 		//On gère les évènements des deux joueurs	
-		vector<void*> v = {(void*)m_window, (void*)m_physicalMap, (void*)&m_entities};
-		m_player1->manageEvents(event, (void*)&v);
-		m_player2->manageEvents(event, (void*)&v);
 		
+		if(hasWon == 0)
+		{
+			vector<void*> v = {(void*)m_window, (void*)m_physicalMap, (void*)&m_entities};
+			m_player1->manageEvents(event, (void*)&v);
+			m_player2->manageEvents(event, (void*)&v);
+		}
+
 		//On gère les évènements spécifiques de la fenêtre
 		m_window->manageEvents(event);
 	}
@@ -203,6 +207,7 @@ void Game::start()
 	//on démarre le jeu
 	srand(time(NULL));
 	m_isPlaying = true;
+	hasWon = 0;
 	m_timer.restart();	
 
 	while(m_isPlaying && m_window->isOpen()) //tant que la fenêtre reste ouverte et qu'on a pas quitté le jeu via le menu pause, on continue à jouer
@@ -216,7 +221,13 @@ void Game::start()
 		m_player2->updateState(this, elapsedTime, m_physicalMap);
 		for(unsigned int i = 0 ; i < m_entities.size() ; i++)
 			m_entities[i]->updateState(this, elapsedTime, m_physicalMap);
-	
+		
+		if(m_player1->getHealth() <= 0)
+			hasWon = 2;
+		else if(m_player2->getHealth() <= 0)
+			hasWon = 1;
+
+
 		//On efface l'affichage
 		m_window->clear(sf::Color(100, 100, 100));
 		

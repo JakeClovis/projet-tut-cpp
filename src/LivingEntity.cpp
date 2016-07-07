@@ -109,7 +109,10 @@ void LivingEntity::updateState(Controller *controller, sf::Time &elapsed, Tilema
 	
 void LivingEntity::draw(GameWindow* window)
 {
-	float offsetX = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_center.x;
-	float offsetY = (m_tilesys->getTs()->getDisplayHeight()/(float)m_tilesys->getTs()->getHeight())*m_center.y;
-	window->draw(*(m_tilesys->getTile(m_orientation)->getSprite(m_tick, m_position.x-offsetX, m_position.y-offsetY)));
+	if(m_health > 0)
+	{
+		float offsetX = (m_tilesys->getTs()->getDisplayWidth()/(float)m_tilesys->getTs()->getWidth())*m_center.x;
+		float offsetY = (m_tilesys->getTs()->getDisplayHeight()/(float)m_tilesys->getTs()->getHeight())*m_center.y;
+		window->draw(*(m_tilesys->getTile(m_orientation)->getSprite(m_tick, m_position.x-offsetX, m_position.y-offsetY)));
+	}
 }

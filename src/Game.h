@@ -22,6 +22,7 @@ private:
 	bool m_isPlaying; //!< permet de vérifier si la partie est en cours
 	Player *m_player1, //!< le joueur 1
 		   *m_player2; //!< le joueur 2
+	int hasWon; //!< 0 si personne n'est mort, 1 ou 2 en fonction de qui a gagné
 	Tilemap *m_physicalMap; //!< plateau de jeu
 	Tilemap *m_backgroundMap; //!< arrière plan de jeu
 	vector<Entity*> m_entities; //!< entités non joueur présentes sur le plateau
