@@ -8,3 +8,13 @@ bomberman
 SFML-Project.cbp
 SFML-Project.depend
 SFML-Project.layout
+rapport/*.aux
+rapport/*.pdf
+rapport/*.idx
+rapport/*.ilg
+rapport/*.ind
+rapport/*.lof
+rapport/*.log
+rapport/*.lot
+rapport/*.out
+rapport/*.toc
