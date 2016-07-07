@@ -1,6 +1,0 @@
-\select@language {french}
-\contentsline {chapter}{Introduction}{2}{chapter*.2}
-\contentsline {chapter}{\numberline {1}G\IeC {\'e}n\IeC {\`e}se}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Interpr\IeC {\'e}tation du sujet}{3}{section.1.1}
-\contentsline {section}{\numberline {1.2}Choix des technologies}{3}{section.1.2}
-\contentsline {chapter}{\numberline {2}D\IeC {\'e}veloppement}{4}{chapter.2}
